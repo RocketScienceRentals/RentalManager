@@ -1,0 +1,50 @@
+﻿@model RentalManagement.Models.Rental
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Rental</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NegotiatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NegotiatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
