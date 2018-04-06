@@ -220,6 +220,10 @@
     <Compile Include="Migrations\201804062126432_appliances.Designer.cs">
       <DependentUpon>201804062126432_appliances.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804062210229_roles.cs" />
+    <Compile Include="Migrations\201804062210229_roles.Designer.cs">
+      <DependentUpon>201804062210229_roles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\MaintenanceRequest.cs" />
@@ -331,9 +335,11 @@
     <Content Include="Views\Appliances\Details.cshtml" />
     <Content Include="Views\Appliances\Edit.cshtml" />
     <Content Include="Views\Appliances\Index.cshtml" />
+    <Content Include="Views\Account\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -360,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804062126432_appliances.resx">
       <DependentUpon>201804062126432_appliances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804062210229_roles.resx">
+      <DependentUpon>201804062210229_roles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
