@@ -196,7 +196,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OccupanciesController.cs" />
-    <Compile Include="Controllers\OrderDetailsController.cs" />
     <Compile Include="Controllers\RentalsController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -302,9 +301,9 @@
     <Content Include="Views\Rentals\Details.cshtml" />
     <Content Include="Views\Rentals\Edit.cshtml" />
     <Content Include="Views\Rentals\Index.cshtml" />
-    <Content Include="Views\Accounting\Index.cshtml" />
     <Content Include="Views\Accounting\PaymentDetails.cshtml" />
     <Content Include="Views\Accounting\OrderDetails.cshtml" />
+    <Content Include="Views\Accounting\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
