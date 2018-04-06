@@ -7,6 +7,7 @@ using RentalManagement.Models;
 
 namespace RentalManagement.Controllers
 {
+    [Authorize(Roles = "Admin, Manager, Staff")]
     public class AccountingController : Controller
     {
 
