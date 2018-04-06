@@ -79,6 +79,12 @@ namespace RentalManagement.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        // I modify the model so that we could set the role of the register user
+        [Required]
+        [Display(Name = "User Role")]
+        public string UserRole { get; set; }
+
     }
 
     public class ResetPasswordViewModel
