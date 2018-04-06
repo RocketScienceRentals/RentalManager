@@ -1,0 +1,80 @@
+﻿@model RentalManagement.Models.MaintenanceRequest
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MaintenanceRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompletedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompletedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FixDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FixDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoursSpent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoursSpent)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

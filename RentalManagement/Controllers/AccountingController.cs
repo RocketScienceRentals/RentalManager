@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace RentalManagement.Controllers
 {
+    [Authorize(Roles = "Admin, Manager, Staff")]
     public class AccountingController : Controller
     {
         // GET: Accounting

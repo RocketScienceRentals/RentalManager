@@ -36,5 +36,6 @@ namespace RentalManagement.Models
         public DbSet<FullAddress> FullAddresses { get; set; }
         public DbSet<Asset> Assets { get; set; }
         public DbSet<Appliance> Appliances { get; set; }
+        public DbSet<MaintenanceRequest> MaintenanceRequest { get; set; }
     }
 }

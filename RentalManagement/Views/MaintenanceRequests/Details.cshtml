@@ -1,0 +1,74 @@
+﻿@model RentalManagement.Models.MaintenanceRequest
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MaintenanceRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompletedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompletedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FixDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FixDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoursSpent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoursSpent)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
