@@ -12,7 +12,7 @@ namespace RentalManagement.Controllers
 {
     public class RentalsController : Controller
     {
-        private RentalDbContext db = new RentalDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Rentals
         public ActionResult Index()
@@ -46,7 +46,7 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,AssetID,ClientID,NegotiatedOn,Details")] Rental rental)
+        public ActionResult Create([Bind(Include = "ID,NegotiatedOn,Details")] Rental rental)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,AssetID,ClientID,NegotiatedOn,Details")] Rental rental)
+        public ActionResult Edit([Bind(Include = "ID,NegotiatedOn,Details")] Rental rental)
         {
             if (ModelState.IsValid)
             {

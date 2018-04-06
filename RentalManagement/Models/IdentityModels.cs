@@ -29,5 +29,10 @@ namespace RentalManagement.Models
         {
             return new ApplicationDbContext();
         }
+        public DbSet<Rental> Rentals { get; set; }
+        public DbSet<Tenant> Applicants { get; set; }
+        public DbSet<Occupancy> Occupancies { get; set; }
+        public DbSet<FullAddress> FullAddresses { get; set; }
+        public DbSet<Asset> Assets { get; set; }
     }
 }

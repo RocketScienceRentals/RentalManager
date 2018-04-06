@@ -13,9 +13,6 @@ namespace RentalManagement.Models
     {
         public Guid ID { get; set; }
 
-        [Required]
-        public FullAddress HomeAddress { get; set; }
-
         [Required(ErrorMessage = "PhoneNumber is required")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "PhoneNumber")]
@@ -29,12 +26,7 @@ namespace RentalManagement.Models
         public string Details { get; set; }
 
         //Restrict the user to only apply for 1 asset at a time for simplicity's sake for now
-        [Required]
+        
         public Asset RequestedAssets { get; set; }
-    }
-
-    public class TenantDbContext : DbContext
-    {
-        public DbSet<Tenant> Applicants { get; set; }
     }
 }

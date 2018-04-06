@@ -1,4 +1,4 @@
-﻿@model RentalManagement.Models.Rental
+﻿@model RentalManagement.Models.Tenant
 
 @{
     ViewBag.Title = "Details";
@@ -7,15 +7,23 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Rental</h4>
+    <h4>Tenant</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.NegotiatedOn)
+            @Html.DisplayNameFor(model => model.PhoneNumber)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NegotiatedOn)
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
         </dd>
 
         <dt>
