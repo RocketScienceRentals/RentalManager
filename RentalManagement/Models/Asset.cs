@@ -19,8 +19,4 @@ namespace RentalManagement.Models
         public ICollection<Rental> RentalHistory { get; set; }
 
     }
-    public class AssetDbContext : DbContext
-    {
-        public DbSet<Asset> Assets { get; set; }
-    }
 }
