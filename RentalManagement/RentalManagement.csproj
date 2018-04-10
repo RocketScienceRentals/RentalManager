@@ -198,9 +198,9 @@
     <Compile Include="Controllers\MaintenanceRequestsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OccupanciesController.cs" />
-    <Compile Include="Controllers\OrderDetailsController.cs" />
     <Compile Include="Controllers\RentalsController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
+    <Compile Include="CustomFilters\AuthLogAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -331,6 +331,7 @@
     <Content Include="Views\Appliances\Details.cshtml" />
     <Content Include="Views\Appliances\Edit.cshtml" />
     <Content Include="Views\Appliances\Index.cshtml" />
+    <Content Include="Views\Shared\AuthorizeFailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
