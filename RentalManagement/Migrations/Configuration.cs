@@ -9,8 +9,7 @@ namespace RentalManagement.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "RentalManagement.Models.ApplicationDbContext";
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(RentalManagement.Models.ApplicationDbContext context)
