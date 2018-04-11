@@ -7,10 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RentalManagement.Models;
+using RentalManagement.CustomFilters;
 
 namespace RentalManagement.Controllers
 {
-    [Authorize(Roles = "Admin, Manager, Staff")]
+    [AuthLog(Roles = "Tenant")]
     public class MaintenanceRequestsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

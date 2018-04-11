@@ -6,11 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using RentalManagement.CustomFilters;
 using RentalManagement.Models;
 
 namespace RentalManagement.Controllers
 {
-    [Authorize(Roles = "Admin, Manager, Staff, Tenant")]
+    [AuthLog(Roles = "Tenant")]
     public class TenantsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
