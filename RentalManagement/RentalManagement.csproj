@@ -317,6 +317,7 @@
     <Content Include="Views\Appliances\Index.cshtml" />
     <Content Include="Views\Account\AccessDenied.cshtml" />
     <Content Include="Views\Shared\AuthorizeFailed.cshtml" />
+    <Content Include="Views\Home\RentalList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
