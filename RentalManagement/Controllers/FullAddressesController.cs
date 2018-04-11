@@ -11,7 +11,7 @@ using RentalManagement.CustomFilters;
 
 namespace RentalManagement.Controllers
 {
-    [AuthLog(Roles = "Tenant")]
+    [AuthLog(Roles = "Manager, Employee")]
     public class FullAddressesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

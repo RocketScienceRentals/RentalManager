@@ -205,27 +205,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804060102563_InitialCreate.cs" />
-    <Compile Include="Migrations\201804060102563_InitialCreate.Designer.cs">
-      <DependentUpon>201804060102563_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804062108017_assets1.cs" />
-    <Compile Include="Migrations\201804062108017_assets1.Designer.cs">
-      <DependentUpon>201804062108017_assets1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804062119148_assset-2.cs" />
-    <Compile Include="Migrations\201804062119148_assset-2.Designer.cs">
-      <DependentUpon>201804062119148_assset-2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804062126432_appliances.cs" />
-    <Compile Include="Migrations\201804062126432_appliances.Designer.cs">
-      <DependentUpon>201804062126432_appliances.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804062210229_roles.cs" />
-    <Compile Include="Migrations\201804062210229_roles.Designer.cs">
-      <DependentUpon>201804062210229_roles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\MaintenanceRequest.cs" />
     <Compile Include="Models\Appliance.cs" />
@@ -355,23 +334,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804060102563_InitialCreate.resx">
-      <DependentUpon>201804060102563_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804062108017_assets1.resx">
-      <DependentUpon>201804062108017_assets1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804062119148_assset-2.resx">
-      <DependentUpon>201804062119148_assset-2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804062126432_appliances.resx">
-      <DependentUpon>201804062126432_appliances.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804062210229_roles.resx">
-      <DependentUpon>201804062210229_roles.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
