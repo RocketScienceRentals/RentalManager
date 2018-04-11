@@ -1,12 +1,14 @@
-﻿using System;
+﻿using RentalManagement.CustomFilters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using RentalManagement.CustomFilters;
 
 namespace RentalManagement.Controllers
 {
-    [Authorize(Roles = "Admin, Manager, Staff")]
+    [AuthLog(Roles = "Tenant")]
     public class AccountingController : Controller
     {
         // GET: Accounting
