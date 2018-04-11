@@ -191,19 +191,23 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountingController.cs" />
+    <Compile Include="Controllers\AppliancesController.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\FullAddressesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaintenanceRequestsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OccupanciesController.cs" />
     <Compile Include="Controllers\OrderDetailsController.cs" />
     <Compile Include="Controllers\RentalsController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
+    <Compile Include="CustomFilters\AuthLogAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\MaintenanceRequest.cs" />
+    <Compile Include="Models\Appliance.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\FullAddress.cs" />
@@ -301,9 +305,22 @@
     <Content Include="Views\Accounting\Index.cshtml" />
     <Content Include="Views\Accounting\PaymentDetails.cshtml" />
     <Content Include="Views\Accounting\OrderDetails.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Create.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Delete.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Details.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Edit.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Index.cshtml" />
+    <Content Include="Views\Appliances\Create.cshtml" />
+    <Content Include="Views\Appliances\Delete.cshtml" />
+    <Content Include="Views\Appliances\Details.cshtml" />
+    <Content Include="Views\Appliances\Edit.cshtml" />
+    <Content Include="Views\Appliances\Index.cshtml" />
+    <Content Include="Views\Account\AccessDenied.cshtml" />
+    <Content Include="Views\Shared\AuthorizeFailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
