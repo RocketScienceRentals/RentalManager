@@ -8,6 +8,10 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+
+    @* Temporary button to creating dummy data entry *@
+    @*@Html.ActionLink("Create Dummy data", "CreateDummyData", "Assets", null, new { @class = "btn btn-primary btn-large" })
+    <button type="button" onclick="location.href='@Url.Action("CreateDummyData", "Assets")'" />*@
 </p>
 <table class="table">
     <tr>

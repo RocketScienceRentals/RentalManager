@@ -9,7 +9,7 @@ namespace RentalManagement.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "RentalManagement.Models.ApplicationDbContext";
         }
 
