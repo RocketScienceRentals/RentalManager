@@ -1,0 +1,24 @@
+﻿@model IEnumerable<RentalManagement.Models.Occupancy>
+
+@{
+    ViewBag.Title = "OrderDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Order Details here</p>
+@foreach (var item in Model)
+{
+    @Html.DisplayNameFor(model => model.StartDate) @Html.DisplayFor(modelItem => item.StartDate)
+    <br />
+    @Html.DisplayNameFor(model => model.EndDate) @Html.DisplayFor(modelItem => item.EndDate)
+}
+
+<br />
+<br />
+<br />
+
+<!-- Final confirmation page-->
+<p><a class="btn btn-default" href="../Home/Index">Confirm &raquo;</a></p>

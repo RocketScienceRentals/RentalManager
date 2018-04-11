@@ -190,16 +190,45 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountingController.cs" />
+    <Compile Include="Controllers\AppliancesController.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\FullAddressesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaintenanceRequestsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OccupanciesController.cs" />
+    <Compile Include="Controllers\OrderDetailsController.cs" />
     <Compile Include="Controllers\RentalsController.cs" />
+    <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804060102563_InitialCreate.cs" />
+    <Compile Include="Migrations\201804060102563_InitialCreate.Designer.cs">
+      <DependentUpon>201804060102563_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804062108017_assets1.cs" />
+    <Compile Include="Migrations\201804062108017_assets1.Designer.cs">
+      <DependentUpon>201804062108017_assets1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804062119148_assset-2.cs" />
+    <Compile Include="Migrations\201804062119148_assset-2.Designer.cs">
+      <DependentUpon>201804062119148_assset-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804062126432_appliances.cs" />
+    <Compile Include="Migrations\201804062126432_appliances.Designer.cs">
+      <DependentUpon>201804062126432_appliances.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804062210229_roles.cs" />
+    <Compile Include="Migrations\201804062210229_roles.Designer.cs">
+      <DependentUpon>201804062210229_roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\MaintenanceRequest.cs" />
+    <Compile Include="Models\Appliance.cs" />
+    <Compile Include="Models\Tenant.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\FullAddress.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -232,7 +261,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -271,6 +302,16 @@
     <Content Include="Views\FullAddresses\Details.cshtml" />
     <Content Include="Views\FullAddresses\Edit.cshtml" />
     <Content Include="Views\FullAddresses\Index.cshtml" />
+    <Content Include="Views\Assets\Create.cshtml" />
+    <Content Include="Views\Assets\Delete.cshtml" />
+    <Content Include="Views\Assets\Details.cshtml" />
+    <Content Include="Views\Assets\Edit.cshtml" />
+    <Content Include="Views\Assets\Index.cshtml" />
+    <Content Include="Views\Tenants\Create.cshtml" />
+    <Content Include="Views\Tenants\Delete.cshtml" />
+    <Content Include="Views\Tenants\Details.cshtml" />
+    <Content Include="Views\Tenants\Edit.cshtml" />
+    <Content Include="Views\Tenants\Index.cshtml" />
     <Content Include="Views\Occupancies\Create.cshtml" />
     <Content Include="Views\Occupancies\Delete.cshtml" />
     <Content Include="Views\Occupancies\Details.cshtml" />
@@ -281,14 +322,24 @@
     <Content Include="Views\Rentals\Details.cshtml" />
     <Content Include="Views\Rentals\Edit.cshtml" />
     <Content Include="Views\Rentals\Index.cshtml" />
-    <Content Include="Views\Assets\Create.cshtml" />
-    <Content Include="Views\Assets\Delete.cshtml" />
-    <Content Include="Views\Assets\Details.cshtml" />
-    <Content Include="Views\Assets\Edit.cshtml" />
-    <Content Include="Views\Assets\Index.cshtml" />
+    <Content Include="Views\Accounting\Index.cshtml" />
+    <Content Include="Views\Accounting\PaymentDetails.cshtml" />
+    <Content Include="Views\Accounting\OrderDetails.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Create.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Delete.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Details.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Edit.cshtml" />
+    <Content Include="Views\MaintenanceRequests\Index.cshtml" />
+    <Content Include="Views\Appliances\Create.cshtml" />
+    <Content Include="Views\Appliances\Delete.cshtml" />
+    <Content Include="Views\Appliances\Details.cshtml" />
+    <Content Include="Views\Appliances\Edit.cshtml" />
+    <Content Include="Views\Appliances\Index.cshtml" />
+    <Content Include="Views\Account\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -302,6 +353,23 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804060102563_InitialCreate.resx">
+      <DependentUpon>201804060102563_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804062108017_assets1.resx">
+      <DependentUpon>201804062108017_assets1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804062119148_assset-2.resx">
+      <DependentUpon>201804062119148_assset-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804062126432_appliances.resx">
+      <DependentUpon>201804062126432_appliances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804062210229_roles.resx">
+      <DependentUpon>201804062210229_roles.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -317,7 +385,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52660</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

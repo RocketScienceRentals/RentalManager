@@ -9,15 +9,10 @@ namespace RentalManagement.Models
     public class Occupancy
     {
         public int ID { get; set; }
-        public Guid AssetID { get; set; }
-        public Guid ClientID { get; set; }
+        public Asset AssetID { get; set; }
+        public Tenant ClientID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Detail { get; set; }
-    }
-
-    public class OccupancyDBContext : DbContext
-    {
-        public DbSet<Occupancy> Occupancies { get; set; }
     }
 }

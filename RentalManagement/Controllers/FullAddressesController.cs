@@ -12,7 +12,7 @@ namespace RentalManagement.Controllers
 {
     public class FullAddressesController : Controller
     {
-        private FullAddressDbContext db = new FullAddressDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: FullAddresses
         public ActionResult Index()
