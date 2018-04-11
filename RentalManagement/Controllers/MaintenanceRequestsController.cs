@@ -12,107 +12,108 @@ using RentalManagement.CustomFilters;
 namespace RentalManagement.Controllers
 {
     [AuthLog(Roles = "Tenant")]
-    public class OccupanciesController : Controller
+    public class MaintenanceRequestsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Occupancies
+        // GET: MaintenanceRequests
         public ActionResult Index()
         {
-            return View(db.Occupancies.ToList());
+            return View(db.MaintenanceRequest.ToList());
         }
 
-        // GET: Occupancies/Details/5
-        public ActionResult Details(int? id)
+        // GET: MaintenanceRequests/Details/5
+        public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Occupancy occupancy = db.Occupancies.Find(id);
-            if (occupancy == null)
+            MaintenanceRequest maintenanceRequest = db.MaintenanceRequest.Find(id);
+            if (maintenanceRequest == null)
             {
                 return HttpNotFound();
             }
-            return View(occupancy);
+            return View(maintenanceRequest);
         }
 
-        // GET: Occupancies/Create
+        // GET: MaintenanceRequests/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Occupancies/Create
+        // POST: MaintenanceRequests/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,StartDate,EndDate,Detail")] Occupancy occupancy)
+        public ActionResult Create([Bind(Include = "ID,CreatedDate,CompletedDate,Subject,RequestDetail,StatusDetail,FixDetail,HoursSpent")] MaintenanceRequest maintenanceRequest)
         {
             if (ModelState.IsValid)
             {
-                db.Occupancies.Add(occupancy);
+                maintenanceRequest.ID = Guid.NewGuid();
+                db.MaintenanceRequest.Add(maintenanceRequest);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(occupancy);
+            return View(maintenanceRequest);
         }
 
-        // GET: Occupancies/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: MaintenanceRequests/Edit/5
+        public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Occupancy occupancy = db.Occupancies.Find(id);
-            if (occupancy == null)
+            MaintenanceRequest maintenanceRequest = db.MaintenanceRequest.Find(id);
+            if (maintenanceRequest == null)
             {
                 return HttpNotFound();
             }
-            return View(occupancy);
+            return View(maintenanceRequest);
         }
 
-        // POST: Occupancies/Edit/5
+        // POST: MaintenanceRequests/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,StartDate,EndDate,Detail")] Occupancy occupancy)
+        public ActionResult Edit([Bind(Include = "ID,CreatedDate,CompletedDate,Subject,RequestDetail,StatusDetail,FixDetail,HoursSpent")] MaintenanceRequest maintenanceRequest)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(occupancy).State = EntityState.Modified;
+                db.Entry(maintenanceRequest).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(occupancy);
+            return View(maintenanceRequest);
         }
 
-        // GET: Occupancies/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: MaintenanceRequests/Delete/5
+        public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Occupancy occupancy = db.Occupancies.Find(id);
-            if (occupancy == null)
+            MaintenanceRequest maintenanceRequest = db.MaintenanceRequest.Find(id);
+            if (maintenanceRequest == null)
             {
                 return HttpNotFound();
             }
-            return View(occupancy);
+            return View(maintenanceRequest);
         }
 
-        // POST: Occupancies/Delete/5
+        // POST: MaintenanceRequests/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Guid id)
         {
-            Occupancy occupancy = db.Occupancies.Find(id);
-            db.Occupancies.Remove(occupancy);
+            MaintenanceRequest maintenanceRequest = db.MaintenanceRequest.Find(id);
+            db.MaintenanceRequest.Remove(maintenanceRequest);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

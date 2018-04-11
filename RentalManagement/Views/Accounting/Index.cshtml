@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<RentalManagement.Models.Occupancy>
+
 @{
     ViewBag.Title = "Accounting";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,5 +7,16 @@
 
 <h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
+
+@foreach (var item in Model)
+{
+    @Html.DisplayNameFor(model => model.StartDate) @Html.DisplayFor(modelItem => item.StartDate)
+    <br />
+    @Html.DisplayNameFor(model => model.EndDate) @Html.DisplayFor(modelItem => item.EndDate)
+}
+
+<br />
+<br />
+<br />
 
 <p><a class="btn btn-default" href="Accounting/PaymentDetails">Book &raquo;</a></p>
