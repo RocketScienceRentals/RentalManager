@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RentalManagement.Models;
+using RentalManagement.CustomFilters;
 
 namespace RentalManagement.Controllers
 {
+    [AuthLog(Roles = "Tenant")]
     public class OccupanciesController : Controller
     {
-        private OccupancyDBContext db = new OccupancyDBContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Occupancies
         public ActionResult Index()
@@ -46,7 +48,7 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,AssetID,ClientID,StartDate,EndDate,Detail")] Occupancy occupancy)
+        public ActionResult Create([Bind(Include = "ID,StartDate,EndDate,Detail")] Occupancy occupancy)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +80,7 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,AssetID,ClientID,StartDate,EndDate,Detail")] Occupancy occupancy)
+        public ActionResult Edit([Bind(Include = "ID,StartDate,EndDate,Detail")] Occupancy occupancy)
         {
             if (ModelState.IsValid)
             {

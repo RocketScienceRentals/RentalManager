@@ -7,12 +7,42 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RentalManagement.Models;
+using RentalManagement.CustomFilters;
 
 namespace RentalManagement.Controllers
 {
+    [AuthLog(Roles = "Manager")]
     public class AssetsController : Controller
     {
-        private AssetDbContext db = new AssetDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,Name,Type,AskingRent,Address")] Asset asset)
+        {
+            if (ModelState.IsValid)
+            {
+                asset.ID = Guid.NewGuid();
+                db.Assets.Add(asset);
+                db.SaveChanges();
+
+                //using (var transaction = db.Database.BeginTransaction())
+                //{
+                //    try
+                //    {
+
+                //    } catch (Exception)
+                //    {
+                //        //If anything goes wrong rollback
+                //        transaction.Rollback();
+                //        ViewBag.ResultMessage = "Error occured, records rolledback.";
+                //    }
+                //}
+                return RedirectToAction("Index");
+            }
+
+            return View(asset);
+        }
 
         // GET: Assets
         public ActionResult Index()
@@ -21,7 +51,7 @@ namespace RentalManagement.Controllers
         }
 
         // GET: Assets/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
@@ -44,22 +74,23 @@ namespace RentalManagement.Controllers
         // POST: Assets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Type,AskingRent")] Asset asset)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Assets.Add(asset);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "ID,Name,Type,AskingRent")] Asset asset)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        asset.ID = Guid.NewGuid();
+        //        db.Assets.Add(asset);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(asset);
-        }
+        //    return View(asset);
+        //}
 
         // GET: Assets/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
@@ -90,7 +121,7 @@ namespace RentalManagement.Controllers
         }
 
         // GET: Assets/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
@@ -107,7 +138,7 @@ namespace RentalManagement.Controllers
         // POST: Assets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Guid id)
         {
             Asset asset = db.Assets.Find(id);
             db.Assets.Remove(asset);

@@ -15,9 +15,4 @@ namespace RentalManagement.Models
         public DateTime EndDate { get; set; }
         public string Detail { get; set; }
     }
-
-    public class OccupancyDBContext : DbContext
-    {
-        public DbSet<Occupancy> Occupancies { get; set; }
-    }
 }

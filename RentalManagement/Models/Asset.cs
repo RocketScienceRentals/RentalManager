@@ -17,10 +17,6 @@ namespace RentalManagement.Models
         public string AskingRent { get; set; }
         public ICollection<Occupancy> OccupancyHistory { get; set; }
         public ICollection<Rental> RentalHistory { get; set; }
-
-    }
-    public class AssetDbContext : DbContext
-    {
-        public DbSet<Asset> Assets { get; set; }
+        public ICollection<Appliance> Appliances { get; set; }
     }
 }

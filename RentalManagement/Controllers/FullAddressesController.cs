@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RentalManagement.Models;
+using RentalManagement.CustomFilters;
 
 namespace RentalManagement.Controllers
 {
+    [AuthLog(Roles = "Manager, Employee")]
     public class FullAddressesController : Controller
     {
-        private FullAddressDbContext db = new FullAddressDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: FullAddresses
         public ActionResult Index()
