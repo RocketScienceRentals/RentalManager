@@ -14,6 +14,7 @@ namespace RentalManagement.Controllers
     public class AssetsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private List<Appliance> app;
 
         // GET: Assets
         public ActionResult Index()
@@ -63,6 +64,19 @@ namespace RentalManagement.Controllers
         // GET: Assets/Edit/5
         public ActionResult Edit(Guid? id)
         {
+            List<SelectListItem> appliances = new List<SelectListItem>();
+
+            app = db.Appliances.Where(m => m.BelongsToAsset == null).ToList();
+
+            for(int i = 0; i < app.Count; i++)
+            {
+                appliances.Add(new SelectListItem() { Text = app[i].Name.ToString(),
+                    Value = app[i].ID.ToString()
+                });
+            }
+
+            ViewBag.AppList = new SelectList(appliances, "Value", "Text");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,8 +94,15 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Type,AskingRent")] Asset asset)
+        public ActionResult Edit([Bind(Include = "ID,Name,Type,AskingRent")] Asset asset
+            , FormCollection fc)
         {
+            Guid appId = new Guid(fc["appForm"].ToString());
+
+            //var chosenApp = db.Appliances.ToList();
+            //var chosenApp3 = db.Appliances.Find((Guid)appId);
+            var chosenApp2 = db.Appliances.Where(m => m.ID == (Guid)appId).First();
+            chosenApp2.BelongsToAsset = asset;
             if (ModelState.IsValid)
             {
                 db.Entry(asset).State = EntityState.Modified;
