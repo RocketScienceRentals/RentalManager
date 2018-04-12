@@ -6,114 +6,111 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using RentalManagement.CustomFilters;
 using RentalManagement.Models;
 
 namespace RentalManagement.Controllers
 {
-    [AuthLog(Roles = "Tenant")]
-    public class TenantsController : Controller
+    public class ApplicantsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Tenants
+        // GET: Applicants
         public ActionResult Index()
         {
             return View(db.Applicants.ToList());
         }
 
-        // GET: Tenants/Details/5
-        public ActionResult Details(Guid? id)
+        // GET: Applicants/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tenant tenant = db.Tenants.Find(id);
-            if (tenant == null)
+            Applicant applicant = db.Applicants.Find(id);
+            if (applicant == null)
             {
                 return HttpNotFound();
             }
-            return View(tenant);
+            return View(applicant);
         }
 
-        // GET: Tenants/Create
+        // GET: Applicants/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Tenants/Create
+        // POST: Applicants/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,PhoneNumber,Email,Details")] Tenant tenant)
+        public ActionResult Create([Bind(Include = "ID,Name,Email,Details")] Applicant applicant)
         {
             if (ModelState.IsValid)
             {
-                tenant.ID = Guid.NewGuid();
-                db.Tenants.Add(tenant);
+                db.Applicants.Add(applicant);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(tenant);
+            return View(applicant);
         }
 
-        // GET: Tenants/Edit/5
-        public ActionResult Edit(Guid? id)
+        // GET: Applicants/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tenant tenant = db.Tenants.Find(id);
-            if (tenant == null)
+            Applicant applicant = db.Applicants.Find(id);
+            if (applicant == null)
             {
                 return HttpNotFound();
             }
-            return View(tenant);
+            return View(applicant);
         }
 
-        // POST: Tenants/Edit/5
+        // POST: Applicants/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,PhoneNumber,Email,Details")] Tenant tenant)
+        public ActionResult Edit([Bind(Include = "ID,Name,Email,Details")] Applicant applicant)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tenant).State = EntityState.Modified;
+                db.Entry(applicant).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(tenant);
+            return View(applicant);
         }
 
-        // GET: Tenants/Delete/5
-        public ActionResult Delete(Guid? id)
+        // GET: Applicants/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tenant tenant = db.Tenants.Find(id);
-            if (tenant == null)
+            Applicant applicant = db.Applicants.Find(id);
+            if (applicant == null)
             {
                 return HttpNotFound();
             }
-            return View(tenant);
+            return View(applicant);
         }
 
-        // POST: Tenants/Delete/5
+        // POST: Applicants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Tenant tenant = db.Tenants.Find(id);
-            db.Tenants.Remove(tenant);
+            Applicant applicant = db.Applicants.Find(id);
+            db.Applicants.Remove(applicant);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

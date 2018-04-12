@@ -40,7 +40,6 @@ namespace RentalManagement.Controllers
                 //}
                 return RedirectToAction("Index");
             }
-
             return View(asset);
         }
 

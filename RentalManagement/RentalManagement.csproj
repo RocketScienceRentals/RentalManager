@@ -192,6 +192,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountingController.cs" />
     <Compile Include="Controllers\AppliancesController.cs" />
+    <Compile Include="Controllers\ApplicantsController.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\FullAddressesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -206,6 +207,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Applicant.cs" />
     <Compile Include="Models\MaintenanceRequest.cs" />
     <Compile Include="Models\Appliance.cs" />
     <Compile Include="Models\Tenant.cs" />
@@ -317,6 +319,12 @@
     <Content Include="Views\Appliances\Index.cshtml" />
     <Content Include="Views\Account\AccessDenied.cshtml" />
     <Content Include="Views\Shared\AuthorizeFailed.cshtml" />
+    <Content Include="Views\Home\RentalList.cshtml" />
+    <Content Include="Views\Applicants\Create.cshtml" />
+    <Content Include="Views\Applicants\Delete.cshtml" />
+    <Content Include="Views\Applicants\Details.cshtml" />
+    <Content Include="Views\Applicants\Edit.cshtml" />
+    <Content Include="Views\Applicants\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

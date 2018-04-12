@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
 namespace RentalManagement.Models
 {
-    public class Rental
+    public class Applicant
     {
         public int ID { get; set; }
-        public Asset AssetID { get; set; }
-        public Tenant ClientID { get; set; }
-        public DateTime NegotiatedOn { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
         public string Details { get; set; }
+        public Asset asset { get; set; }
     }
 }
