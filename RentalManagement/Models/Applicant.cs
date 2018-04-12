@@ -7,10 +7,10 @@ namespace RentalManagement.Models
 {
     public class Applicant
     {
-        public int ID { get; set; }
+        public int ApplicantID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Details { get; set; }
-        public Asset asset { get; set; }
+        public Guid AssetID { get; set; }
     }
 }
