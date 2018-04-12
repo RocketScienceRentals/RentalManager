@@ -201,6 +201,7 @@
     <Compile Include="Controllers\OccupanciesController.cs" />
     <Compile Include="Controllers\OrderDetailsController.cs" />
     <Compile Include="Controllers\RentalsController.cs" />
+    <Compile Include="Controllers\SeedDatabaseController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="CustomFilters\AuthLogAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -284,11 +285,6 @@
     <Content Include="Views\FullAddresses\Details.cshtml" />
     <Content Include="Views\FullAddresses\Edit.cshtml" />
     <Content Include="Views\FullAddresses\Index.cshtml" />
-    <Content Include="Views\Assets\Create.cshtml" />
-    <Content Include="Views\Assets\Delete.cshtml" />
-    <Content Include="Views\Assets\Details.cshtml" />
-    <Content Include="Views\Assets\Edit.cshtml" />
-    <Content Include="Views\Assets\Index.cshtml" />
     <Content Include="Views\Tenants\Create.cshtml" />
     <Content Include="Views\Tenants\Delete.cshtml" />
     <Content Include="Views\Tenants\Details.cshtml" />
@@ -312,11 +308,6 @@
     <Content Include="Views\MaintenanceRequests\Details.cshtml" />
     <Content Include="Views\MaintenanceRequests\Edit.cshtml" />
     <Content Include="Views\MaintenanceRequests\Index.cshtml" />
-    <Content Include="Views\Appliances\Create.cshtml" />
-    <Content Include="Views\Appliances\Delete.cshtml" />
-    <Content Include="Views\Appliances\Details.cshtml" />
-    <Content Include="Views\Appliances\Edit.cshtml" />
-    <Content Include="Views\Appliances\Index.cshtml" />
     <Content Include="Views\Account\AccessDenied.cshtml" />
     <Content Include="Views\Shared\AuthorizeFailed.cshtml" />
     <Content Include="Views\Home\RentalList.cshtml" />
@@ -325,9 +316,21 @@
     <Content Include="Views\Applicants\Details.cshtml" />
     <Content Include="Views\Applicants\Edit.cshtml" />
     <Content Include="Views\Applicants\Index.cshtml" />
+    <Content Include="Views\Appliances\Create.cshtml" />
+    <Content Include="Views\Appliances\Delete.cshtml" />
+    <Content Include="Views\Appliances\Details.cshtml" />
+    <Content Include="Views\Appliances\Edit.cshtml" />
+    <Content Include="Views\Appliances\Index.cshtml" />
+    <Content Include="Views\Assets\Create.cshtml" />
+    <Content Include="Views\Assets\Delete.cshtml" />
+    <Content Include="Views\Assets\Details.cshtml" />
+    <Content Include="Views\Assets\Edit.cshtml" />
+    <Content Include="Views\Assets\Index.cshtml" />
+    <Content Include="Views\Assets\AvailableRentals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SeedDatabase\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

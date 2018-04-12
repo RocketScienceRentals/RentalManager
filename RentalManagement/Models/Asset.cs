@@ -11,12 +11,20 @@ namespace RentalManagement.Models
     public class Asset
     {
         public Guid ID { get; set; }
+        public bool IsOccuppied { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
+        public AssetType Type { get; set; }
         public FullAddress Address { get; set; }
-        public string AskingRent { get; set; }
+        public int AskingRent { get; set; }
         public ICollection<Occupancy> OccupancyHistory { get; set; }
         public ICollection<Rental> RentalHistory { get; set; }
         public ICollection<Appliance> Appliances { get; set; }
+    }
+
+    public enum AssetType
+    {
+        SingleDetachedHome,
+        Townhouse,
+        CondominiumSuite
     }
 }
