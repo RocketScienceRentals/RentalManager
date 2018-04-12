@@ -35,11 +35,8 @@ namespace RentalManagement.Controllers
 
             ApplicationDbContext db = new ApplicationDbContext();
             var asset = db.Assets.Include("Address");
-
             return View(asset.ToList());
         }
-
-
 
         public ActionResult ApplicationForm()
         {
