@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RentalManagement.Models.Asset>
+﻿@model IEnumerable<RentalManagement.Models.Applicant>
 
 @{
     ViewBag.Title = "Index";
@@ -8,10 +8,6 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
-
-    @* Temporary button to creating dummy data entry *@
-    @*@Html.ActionLink("Create Dummy data", "CreateDummyData", "Assets", null, new { @class = "btn btn-primary btn-large" })
-    <button type="button" onclick="location.href='@Url.Action("CreateDummyData", "Assets")'" />*@
 </p>
 <table class="table">
     <tr>
@@ -19,10 +15,10 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AskingRent)
+            @Html.DisplayNameFor(model => model.Details)
         </th>
         <th></th>
     </tr>
@@ -33,10 +29,10 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AskingRent)
+            @Html.DisplayFor(modelItem => item.Details)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

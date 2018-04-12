@@ -6,11 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using RentalManagement.CustomFilters;
 using RentalManagement.Models;
 
 namespace RentalManagement.Controllers
 {
-    [Authorize(Roles = "Admin, Manager, Staff, Tenant")]
+    [AuthLog(Roles = "Tenant")]
     public class TenantsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -28,7 +29,7 @@ namespace RentalManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tenant tenant = db.Applicants.Find(id);
+            Tenant tenant = db.Tenants.Find(id);
             if (tenant == null)
             {
                 return HttpNotFound();
@@ -52,7 +53,7 @@ namespace RentalManagement.Controllers
             if (ModelState.IsValid)
             {
                 tenant.ID = Guid.NewGuid();
-                db.Applicants.Add(tenant);
+                db.Tenants.Add(tenant);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -67,7 +68,7 @@ namespace RentalManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tenant tenant = db.Applicants.Find(id);
+            Tenant tenant = db.Tenants.Find(id);
             if (tenant == null)
             {
                 return HttpNotFound();
@@ -98,7 +99,7 @@ namespace RentalManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tenant tenant = db.Applicants.Find(id);
+            Tenant tenant = db.Tenants.Find(id);
             if (tenant == null)
             {
                 return HttpNotFound();
@@ -111,8 +112,8 @@ namespace RentalManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Tenant tenant = db.Applicants.Find(id);
-            db.Applicants.Remove(tenant);
+            Tenant tenant = db.Tenants.Find(id);
+            db.Tenants.Remove(tenant);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

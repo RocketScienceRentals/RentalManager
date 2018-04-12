@@ -1,18 +1,11 @@
 ﻿@model IEnumerable<RentalManagement.Models.Asset>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "RentalList";
 }
 
-<h2>Index</h2>
+<h2>RentalList</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-
-    @* Temporary button to creating dummy data entry *@
-    @*@Html.ActionLink("Create Dummy data", "CreateDummyData", "Assets", null, new { @class = "btn btn-primary btn-large" })
-    <button type="button" onclick="location.href='@Url.Action("CreateDummyData", "Assets")'" />*@
-</p>
 <table class="table">
     <tr>
         <th>
@@ -23,6 +16,15 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AskingRent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.StreetAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.Province)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.PostalCode)
         </th>
         <th></th>
     </tr>
@@ -39,9 +41,16 @@
             @Html.DisplayFor(modelItem => item.AskingRent)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.DisplayFor(modelItem => item.Address.StreetAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.Province)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.PostalCode)
+        </td>
+        <td>
+            @Html.ActionLink("Apply", "ApplicationForm", new { id = item.ID })
         </td>
     </tr>
 }

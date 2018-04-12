@@ -7,112 +7,110 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RentalManagement.Models;
-using RentalManagement.CustomFilters;
 
 namespace RentalManagement.Controllers
 {
-    [AuthLog(Roles = "Tenant")]
-    public class OccupanciesController : Controller
+    public class ApplicantsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Occupancies
+        // GET: Applicants
         public ActionResult Index()
         {
-            return View(db.Occupancies.ToList());
+            return View(db.Applicants.ToList());
         }
 
-        // GET: Occupancies/Details/5
+        // GET: Applicants/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Occupancy occupancy = db.Occupancies.Find(id);
-            if (occupancy == null)
+            Applicant applicant = db.Applicants.Find(id);
+            if (applicant == null)
             {
                 return HttpNotFound();
             }
-            return View(occupancy);
+            return View(applicant);
         }
 
-        // GET: Occupancies/Create
+        // GET: Applicants/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Occupancies/Create
+        // POST: Applicants/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,StartDate,EndDate,Detail")] Occupancy occupancy)
+        public ActionResult Create([Bind(Include = "ID,Name,Email,Details")] Applicant applicant)
         {
             if (ModelState.IsValid)
             {
-                db.Occupancies.Add(occupancy);
+                db.Applicants.Add(applicant);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(occupancy);
+            return View(applicant);
         }
 
-        // GET: Occupancies/Edit/5
+        // GET: Applicants/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Occupancy occupancy = db.Occupancies.Find(id);
-            if (occupancy == null)
+            Applicant applicant = db.Applicants.Find(id);
+            if (applicant == null)
             {
                 return HttpNotFound();
             }
-            return View(occupancy);
+            return View(applicant);
         }
 
-        // POST: Occupancies/Edit/5
+        // POST: Applicants/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,StartDate,EndDate,Detail")] Occupancy occupancy)
+        public ActionResult Edit([Bind(Include = "ID,Name,Email,Details")] Applicant applicant)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(occupancy).State = EntityState.Modified;
+                db.Entry(applicant).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(occupancy);
+            return View(applicant);
         }
 
-        // GET: Occupancies/Delete/5
+        // GET: Applicants/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Occupancy occupancy = db.Occupancies.Find(id);
-            if (occupancy == null)
+            Applicant applicant = db.Applicants.Find(id);
+            if (applicant == null)
             {
                 return HttpNotFound();
             }
-            return View(occupancy);
+            return View(applicant);
         }
 
-        // POST: Occupancies/Delete/5
+        // POST: Applicants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Occupancy occupancy = db.Occupancies.Find(id);
-            db.Occupancies.Remove(occupancy);
+            Applicant applicant = db.Applicants.Find(id);
+            db.Applicants.Remove(applicant);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
