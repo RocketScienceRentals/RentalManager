@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RentalManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,8 @@ namespace RentalManagement.Controllers
 {
     public class HomeController : Controller
     {
+
+
         public ActionResult Index()
         {
             return View();
@@ -26,5 +29,22 @@ namespace RentalManagement.Controllers
 
             return View();
         }
+
+        public ActionResult RentalList()
+        {
+
+            ApplicationDbContext db = new ApplicationDbContext();
+            var asset = db.Assets.Include("Address");
+
+            return View(asset.ToList());
+        }
+
+
+
+        public ActionResult ApplicationForm()
+        {
+            return View();
+        }
+
     }
 }

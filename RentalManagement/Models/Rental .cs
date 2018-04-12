@@ -14,13 +14,4 @@ namespace RentalManagement.Models
         public DateTime NegotiatedOn { get; set; }
         public string Details { get; set; }
     }
-
-    //public class RentalManagerDbContext : DbContext
-    //{
-    //    public DbSet<Rental> Rentals { get; set; }
-    //    public DbSet<Tenant> Applicants { get; set; }
-    //    public DbSet<Occupancy> Occupancies { get; set; }
-    //    public DbSet<FullAddress> FullAddresses { get; set; }
-    //    public DbSet<Asset> Assets { get; set; }
-    //}
 }

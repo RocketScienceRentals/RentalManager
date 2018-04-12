@@ -23,26 +23,27 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Available Rentals", "RentalList", "Home")</li>
                     @if (Request.IsAuthenticated)
-                    {
-                        <li>
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Links
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Accounting", "Index", "Accounting")</li>
-                                    <li>@Html.ActionLink("Appliances", "Index", "Appliances")</li>
-                                    <li>@Html.ActionLink("Assets", "Index", "Assets")</li>
-                                    <li>@Html.ActionLink("Addresses", "Index", "FullAddresses")</li>
-                                    <li>@Html.ActionLink("Maintenance", "Index", "MaintenanceRequests")</li>
-                                    <li>@Html.ActionLink("Occupancies", "Index", "Occupancies")</li>
-                                    <li>@Html.ActionLink("Rentals", "Index", "Rentals")</li>
-                                    <li>@Html.ActionLink("Tenants", "Index", "Tenants")</li>
-                                </ul>
-                            </div>
-                        </li>
-                    }
+    {
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Links
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Accounting", "Index", "Accounting")</li>
+                            <li>@Html.ActionLink("Appliances", "Index", "Appliances")</li>
+                            <li>@Html.ActionLink("Assets", "Index", "Assets")</li>
+                            <li>@Html.ActionLink("Addresses", "Index", "FullAddresses")</li>
+                            <li>@Html.ActionLink("Maintenance", "Index", "MaintenanceRequests")</li>
+                            <li>@Html.ActionLink("Occupancies", "Index", "Occupancies")</li>
+                            <li>@Html.ActionLink("Rentals", "Index", "Rentals")</li>
+                            <li>@Html.ActionLink("Tenants", "Index", "Tenants")</li>
+                        </ul>
+                    </div>
+                </li>
+}
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
