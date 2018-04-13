@@ -16,6 +16,7 @@ namespace RentalManagement.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public Tenant Tenant { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
