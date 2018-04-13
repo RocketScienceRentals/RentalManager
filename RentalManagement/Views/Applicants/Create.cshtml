@@ -6,11 +6,11 @@
 
 <h2>Create</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    var temp = @ViewBag.Message;
+
     <div class="form-horizontal">
         <h4>Applicant</h4>
         <hr />
@@ -38,6 +38,8 @@
                 @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @Html.Hidden("AssetID", (Guid)@ViewBag.Message)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
