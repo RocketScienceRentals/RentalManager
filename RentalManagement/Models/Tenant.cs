@@ -13,10 +13,11 @@ namespace RentalManagement.Models
     {
         public Guid ID { get; set; }
 
-        [Required(ErrorMessage = "PhoneNumber is required")]
-        [DataType(DataType.PhoneNumber)]
-        [Display(Name = "PhoneNumber")]
-        public string PhoneNumber { get; set; } 
+        public string Name { get; set; }
+        //[Required(ErrorMessage = "PhoneNumber is required")]
+        //[DataType(DataType.PhoneNumber)]
+        //[Display(Name = "PhoneNumber")]
+        //public string PhoneNumber { get; set; } 
 
         [Required]
         [EmailAddress]
