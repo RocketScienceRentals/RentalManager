@@ -139,6 +139,63 @@ namespace RentalManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        /* // POST: Applicants/Accept/5
+            //[ValidateAntiForgeryToken]
+        public ActionResult Accept(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Applicant applicant = db.Applicants.Find(id);
+            if (applicant == null)
+            {
+                return HttpNotFound();
+            }
+            return View(applicant);
+        }
+        */
+
+
+        [ActionName("Accept")]
+        //add record to tenant and delete from applicant
+        public ActionResult AcceptApplicants(int id)
+        {
+            Tenant tenant = new Tenant();
+            Applicant applicant = db.Applicants.Find(id);
+
+            //transfer id(int) to id(guid)
+            byte[] bytes = new byte[16];
+            BitConverter.GetBytes(id).CopyTo(bytes, 0);
+            Guid gid = new Guid(bytes);
+            //tenant.ID = Guid.NewGuid();
+            //string sid = Convert.ToString(id);
+            //Guid.Parse(sid);
+            //tenant.ID = Guid.ParseExact(sid, "B");
+
+            //save applicant data to tenant
+            tenant.Name = applicant.Name;
+            tenant.Email = applicant.Email;
+            tenant.Details = applicant.Details;
+            tenant.ID = gid;
+            //tenant.RequestedAssets = db.Assets.Find(applicant.AssetID);
+            
+            //add tenant to data base
+            db.Tenants.Add(tenant);
+            db.SaveChanges();
+
+            //delete record from applicants
+            db.Applicants.Remove(applicant);
+            db.SaveChanges();
+
+            //delete from assets?
+            //Asset asset = db.Assets.Find(applicant.AssetID);
+            //db.Assets.Remove(asset);
+            //db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
