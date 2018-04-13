@@ -46,7 +46,7 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,PhoneNumber,Email,Details")] Tenant tenant)
+        public ActionResult Create([Bind(Include = "ID,Name,Email,Details")] Tenant tenant)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,PhoneNumber,Email,Details")] Tenant tenant)
+        public ActionResult Edit([Bind(Include = "ID,Name,Email,Details")] Tenant tenant)
         {
             if (ModelState.IsValid)
             {
