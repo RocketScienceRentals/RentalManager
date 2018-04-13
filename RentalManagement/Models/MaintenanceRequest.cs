@@ -13,8 +13,9 @@ namespace RentalManagement.Models
         public Guid ID { get; set; }
         public Tenant Tenant { get; set; }
         public Asset Asset { get; set; }
+        [Required]
         public DateTime CreatedDate { get; set; }
-        public DateTime CompletedDate { get; set; }
+        public DateTime? CompletedDate { get; set; }
         [Required]
         public string Subject { get; set; }
         public string RequestDetail { get; set; }

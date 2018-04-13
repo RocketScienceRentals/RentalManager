@@ -14,25 +14,26 @@
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Type)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Type)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BelongsToAsset)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BelongsToAsset.Name)
         </dd>
 
     </dl>
@@ -40,9 +41,16 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div class="form-actions no-color">
+        @if (@Model.BelongsToAsset  == null)
+        {
+            @:<input type="submit" value="Delete" class="btn btn-default" /> |
+        }
+        else
+        {
+            @:Belongs To Asset, Can not delete |
+        }
+        @Html.ActionLink("Back to List", "Index")
+    </div>
     }
 </div>
