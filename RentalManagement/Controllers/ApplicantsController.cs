@@ -174,11 +174,13 @@ namespace RentalManagement.Controllers
                 if (!result.Succeeded)
                     throw new ApplicationException("Unable to add user to a role.");
 
+                Asset asset = db.Assets.Find(applicant.AssetID);
+
                 Tenant tenant = new Tenant { ID = Guid.NewGuid(),
                                              Name = applicant.Name,
                                              Email = applicant.Email,
                                              Details = applicant.Details,
-                                             //RequestedAssets = applicant.AssetID
+                                             RequestedAssets = asset
                                            };
                 db.Tenants.Add(tenant);
                 db.SaveChanges();
