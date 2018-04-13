@@ -207,6 +207,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Applicant.cs" />
     <Compile Include="Models\MaintenanceRequest.cs" />
@@ -285,11 +286,6 @@
     <Content Include="Views\FullAddresses\Details.cshtml" />
     <Content Include="Views\FullAddresses\Edit.cshtml" />
     <Content Include="Views\FullAddresses\Index.cshtml" />
-    <Content Include="Views\Tenants\Create.cshtml" />
-    <Content Include="Views\Tenants\Delete.cshtml" />
-    <Content Include="Views\Tenants\Details.cshtml" />
-    <Content Include="Views\Tenants\Edit.cshtml" />
-    <Content Include="Views\Tenants\Index.cshtml" />
     <Content Include="Views\Occupancies\Create.cshtml" />
     <Content Include="Views\Occupancies\Delete.cshtml" />
     <Content Include="Views\Occupancies\Details.cshtml" />
@@ -327,6 +323,11 @@
     <Content Include="Views\Assets\Edit.cshtml" />
     <Content Include="Views\Assets\Index.cshtml" />
     <Content Include="Views\Assets\AvailableRentals.cshtml" />
+    <Content Include="Views\Tenants\Create.cshtml" />
+    <Content Include="Views\Tenants\Delete.cshtml" />
+    <Content Include="Views\Tenants\Details.cshtml" />
+    <Content Include="Views\Tenants\Edit.cshtml" />
+    <Content Include="Views\Tenants\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
