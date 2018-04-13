@@ -151,7 +151,8 @@ namespace RentalManagement.Controllers
             base.Dispose(disposing);
         }
 
-        public void Approve(int? id)
+        [ActionName("Approve")]
+        public ActionResult Approve(int id)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -167,8 +168,13 @@ namespace RentalManagement.Controllers
                     RequestedAssets = asset
                 };
                 db.Tenants.Add(tenant);
-                //db.Applicants.Remove(applicant);
                 db.SaveChanges();
+
+                //db.Applicants.Remove(applicant);
+                //db.SaveChanges();
+
+                //asset.IsOccuppied = true;
+                //db.SaveChanges();
 
                 Tenant tenant2 = db.Tenants.Find(tenant.ID);
                 if (tenant2 != null)
@@ -195,9 +201,10 @@ namespace RentalManagement.Controllers
                     //    Credentials = new NetworkCredential("myusername@gmail.com", "mypwd"),
                     //    EnableSsl = true
                     //};
-                    //client.Send("myusername@gmail.com", "myusername@gmail.com", "Your Tenant Account", "Your password is: " + password);
+                    //client.Send("myusername@gmail.com", applicant.Email , "Your Tenant Account", "Your password is: " + password);
                 }
             }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
