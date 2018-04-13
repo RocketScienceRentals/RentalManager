@@ -6,17 +6,19 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<h3>@ViewBag.Message</h3>
 
-<p> You will be paying this amount below: </p>
-@foreach (var item in Model)
-{
-    @Html.Raw("Rent Amount: ")
-    <br />
-    @Html.Raw("Tax: ")
-    <br />
-    @Html.Raw("Total: ")
-}
-<p> Please confirm your purchase by giving mailing a void cheque and press proceed</p>
+<!-- payment information page-->
+<h2>Pay your bill by cheque</h2>
+<p>
+    You can pay by mailing your cheque payment to our payment address below. Please ensure the correct BC Hydro account number found on your bill is included on the cheque. If the cheque is for multiple accounts, include all account numbers on the cheque. If the cheque is for a consolidated account, it's important that the full amount owing be paid to avoid misapplied payments.
+    Please don't mail cash or post-dated cheques.
+</p>
+<p>
+    Name<br />
+    Address<br />
+    Vancouver, B.C. Postal Code
+</p>
+<p>Copied from <a href="https://www.bchydro.com/search.html?q=Can+I+pay+my+bill+by+cheque%3F&qid=1569&ir_type=1">Here</a></p{border:>
+
 <p><a class="btn btn-default" href="OrderDetails">Proceed &raquo;</a></p>
 

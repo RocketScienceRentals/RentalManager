@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<RentalManagement.Models.Occupancy>
 
+
 @{
     ViewBag.Warning = "Do you wish to confirm your purchase?";
-    ViewBag.Title = "Your Order Details";
+    ViewBag.Title = "Order Summary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -19,19 +20,19 @@ What Data to grab:
 {
     @Html.Raw("Client Name: ") @Html.DisplayFor(modelItem => item.ClientID.Name)
     <br />
-    @Html.Raw("Street Address: ")
+    @Html.Raw("Street Address: ") @Html.DisplayFor(modelItem => item.AssetID.Address.StreetAddress)
     <br />
-    @Html.Raw("Province: ")
+    @Html.Raw("Province: ") @Html.DisplayFor(modelItem => item.AssetID.Address.Province)
     <br />
-    @Html.Raw("Country: ")
+    @Html.Raw("Country: ") @Html.DisplayFor(modelItem => item.AssetID.Address.Country)
     <br />
-    @Html.Raw("Postal Code:")
+    @Html.Raw("Postal Code:") @Html.DisplayFor(modelItem => item.AssetID.Address.PostalCode)
     <br />
     @Html.Raw("Start Date:") @Html.DisplayFor(modelItem => item.StartDate)
     <br />
     @Html.Raw("End Date:") @Html.DisplayFor(modelItem => item.EndDate)
     <br />
-    @Html.Raw("Total Amount: ")
+    @Html.Raw("Monthly Rental Fee: ") @Html.DisplayFor(modelItem => item.AssetID.AskingRent)
     <br />
     @Html.Raw("Addional Details:") @Html.DisplayFor(model => item.Detail)
     <br />
