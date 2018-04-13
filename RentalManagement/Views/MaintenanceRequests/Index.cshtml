@@ -3,8 +3,9 @@
 @{
     ViewBag.Title = "Index";
 }
-<asp:Button ID="Button1" runat="server" Text="Button" onclientclick='redirect()' />
-
+<br />
+<button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Create", "MaintenanceRequests")'">Create New Request</button>
+<br />
 <h2>Active Requests</h2>
 <table class="table">
     <tr>
@@ -141,3 +142,4 @@
     }
 
 </table>
+<script src="~/Scripts/requestScript.js" type="text/javascript"></script>

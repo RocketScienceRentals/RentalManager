@@ -11,3 +11,7 @@ $('#closebtn').submit(function () {
         $('#closeReq').fadeOut('slow');
     }, 5000);
 });
+
+function redirect() {
+    location.href = '~/MaintenanceRequest/Create.cshtml';
+}
