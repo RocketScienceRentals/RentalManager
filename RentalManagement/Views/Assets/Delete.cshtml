@@ -60,6 +60,16 @@
             @Html.DisplayFor(model => model.Address.PostalCode)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Appliances)
+        </dt>
+        @foreach (var appliance in Model.Appliances)
+        {
+            <dd>
+                @appliance.Name
+            </dd>
+        }
+
     </dl>
 
     @using (Html.BeginForm()) {
