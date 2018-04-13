@@ -170,8 +170,8 @@ namespace RentalManagement.Controllers
                 db.Tenants.Add(tenant);
                 db.SaveChanges();
 
-                //db.Applicants.Remove(applicant);
-                //db.SaveChanges();
+                db.Applicants.Remove(applicant);
+                db.SaveChanges();
 
                 //asset.IsOccuppied = true;
                 //db.SaveChanges();
