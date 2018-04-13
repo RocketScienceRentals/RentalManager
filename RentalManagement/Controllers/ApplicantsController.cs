@@ -156,11 +156,12 @@ namespace RentalManagement.Controllers
         }
         */
 
-
+            
         [ActionName("Accept")]
         //add record to tenant and delete from applicant
         public ActionResult AcceptApplicants(int id)
         {
+            /*
             Tenant tenant = new Tenant();
             Applicant applicant = db.Applicants.Find(id);
 
@@ -192,6 +193,21 @@ namespace RentalManagement.Controllers
             //Asset asset = db.Assets.Find(applicant.AssetID);
             //db.Assets.Remove(asset);
             //db.SaveChanges();
+
+            return RedirectToAction("Index");
+            */
+
+            Tenant tenant = db.Tenants.Find(gid);
+            // save data into rental
+            Rental rental = new Rental();
+            rental.AssetID = tenant.RequestedAssets;
+            rental.ClientID = tenant.ID;
+
+            Occupancy occupancy = new Occupancy();
+            occupancy.AssetID = tenant.RequestedAssets;
+            occupancy.ClientID = tenant.ID;
+
+
 
             return RedirectToAction("Index");
         }
