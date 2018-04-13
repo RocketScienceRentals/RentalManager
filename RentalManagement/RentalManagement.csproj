@@ -203,9 +203,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804060102563_InitialCreate.cs" />
-    <Compile Include="Migrations\201804060102563_InitialCreate.Designer.cs">
-      <DependentUpon>201804060102563_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201804062336327_rst.cs" />
+    <Compile Include="Migrations\201804062336327_rst.Designer.cs">
+      <DependentUpon>201804062336327_rst.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -241,6 +241,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\requestScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config">
@@ -307,7 +308,6 @@
     <Content Include="Views\Accounting\Index.cshtml" />
     <Content Include="Views\Accounting\PaymentDetails.cshtml" />
     <Content Include="Views\Accounting\OrderDetails.cshtml" />
-    <Content Include="Views\MaintenanceRequests\Create.cshtml" />
     <Content Include="Views\MaintenanceRequests\Delete.cshtml" />
     <Content Include="Views\MaintenanceRequests\Details.cshtml" />
     <Content Include="Views\MaintenanceRequests\Edit.cshtml" />
@@ -330,8 +330,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804060102563_InitialCreate.resx">
-      <DependentUpon>201804060102563_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804062336327_rst.resx">
+      <DependentUpon>201804062336327_rst.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
