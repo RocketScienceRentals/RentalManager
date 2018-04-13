@@ -7,11 +7,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RentalManagement.Models;
-using RentalManagement.CustomFilters;
 
 namespace RentalManagement.Controllers
 {
-    [AuthLog(Roles = "Tenant")]
+    [Authorize(Roles = "Admin, Manager, Staff")]
     public class AppliancesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -48,7 +47,7 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description")] Appliance appliance)
+        public ActionResult Create([Bind(Include = "ID,Name,Type,Description")] Appliance appliance)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +80,7 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description")] Appliance appliance)
+        public ActionResult Edit([Bind(Include = "ID,Name,Type,Description")] Appliance appliance)
         {
             if (ModelState.IsValid)
             {
