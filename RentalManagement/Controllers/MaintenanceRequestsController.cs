@@ -116,9 +116,28 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,CreatedDate,CompletedDate,Subject,RequestDetail,StatusDetail,FixDetail,HoursSpent")] MaintenanceRequest maintenanceRequest)
+        public ActionResult Edit([Bind(Include = "ID,CreatedDate,CompletedDate,Subject,RequestDetail,StatusDetail,FixDetail,HoursSpent")] MaintenanceRequest maintenanceRequest, string saveBtn, string closeBtn)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && saveBtn != null)
+            {
+                db.Entry(maintenanceRequest).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["SavedChangesMessage"] = "All Changes Have Been Saved!";
+                return RedirectToAction("Edit");
+            }
+
+            if(ModelState.IsValid && closeBtn != null)
+            {
+                //alert user to enter completion date and display error msg
+                do
+                {
+                    TempData["CloseRequestMsgAlert"] = "Please Enter a Completion Date to Close Request";
+
+                } while (ViewData.ModelState["CompletedDate"] == null);
+                return RedirectToAction("Edit");
+            }
+            // if completedDate is filled, move request to 'closed' table
+            if (ViewData.ModelState["CompletedDate"] != null && ModelState.IsValid && closeBtn != null)
             {
                 db.Entry(maintenanceRequest).State = EntityState.Modified;
                 db.SaveChanges();

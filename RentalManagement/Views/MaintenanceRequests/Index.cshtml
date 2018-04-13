@@ -4,11 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Active Requests</h2>
 <table class="table">
     <tr>
         <th>
@@ -32,38 +28,109 @@
         <th>
             @Html.DisplayNameFor(model => model.HoursSpent)
         </th>
-        <th></th>
+        <th>
+            Options
+        </th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
+        if (item.CompletedDate == null)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDetail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusDetail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FixDetail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoursSpent)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+
+<br />
+<h2>Closed Requests</h2>
+<table class="table">
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompletedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subject)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequestDetail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StatusDetail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FixDetail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HoursSpent)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompletedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestDetail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusDetail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FixDetail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HoursSpent)
+        </th>
+        <th>
+            Options
+        </th>
     </tr>
-}
+
+    @foreach (var item in Model)
+    {
+        if (item.CompletedDate != null)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDetail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusDetail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FixDetail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoursSpent)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    }
 
 </table>
