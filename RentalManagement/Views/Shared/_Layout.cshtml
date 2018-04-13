@@ -6,7 +6,6 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -17,14 +16,35 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Rental Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Accounting", "Index", "Accounting") </li>
+                    <li>@Html.ActionLink("Available Rentals", "RentalList", "Home")</li>
+                    @if (Request.IsAuthenticated)
+    {
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Links
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Accounting", "Index", "Accounting")</li>
+                            <li>@Html.ActionLink("Addresses", "Index", "FullAddresses")</li>
+                            <li>@Html.ActionLink("Appliances", "Index", "Appliances")</li>
+                            <li>@Html.ActionLink("Applicants", "Index", "Applicants")</li>
+                            <li>@Html.ActionLink("Assets", "Index", "Assets")</li>
+                            <li>@Html.ActionLink("Maintenance", "Index", "MaintenanceRequests")</li>
+                            <li>@Html.ActionLink("Occupancies", "Index", "Occupancies")</li>
+                            <li>@Html.ActionLink("Rentals", "Index", "Rentals")</li>
+                            <li>@Html.ActionLink("Tenants", "Index", "Tenants")</li>
+                        </ul>
+                    </div>
+                </li>
+}
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -37,7 +57,6 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

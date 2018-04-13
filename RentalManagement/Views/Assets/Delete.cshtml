@@ -12,28 +12,63 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.IsOccuppied)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsOccuppied)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Type)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Type)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.AskingRent)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.AskingRent)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.StreetAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address.StreetAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.Province)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address.Province)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.Country)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address.Country)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.PostalCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address.PostalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Appliances)
+        </dt>
+        @foreach (var appliance in Model.Appliances)
+        {
+            <dd>
+                @appliance.Name
+            </dd>
+        }
 
     </dl>
 

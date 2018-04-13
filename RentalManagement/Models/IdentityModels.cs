@@ -3,6 +3,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentalManagement.Models
 {
@@ -16,6 +18,8 @@ namespace RentalManagement.Models
             // Add custom user claims here
             return userIdentity;
         }
+        
+        public Tenant Tenant { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,11 +33,14 @@ namespace RentalManagement.Models
         {
             return new ApplicationDbContext();
         }
+
         public DbSet<Rental> Rentals { get; set; }
-        public DbSet<Tenant> Applicants { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Occupancy> Occupancies { get; set; }
         public DbSet<FullAddress> FullAddresses { get; set; }
         public DbSet<Asset> Assets { get; set; }
+        public DbSet<Appliance> Appliances { get; set; }
         public DbSet<MaintenanceRequest> MaintenanceRequest { get; set; }
+        public DbSet<Applicant> Applicants { get; set; }
     }
 }

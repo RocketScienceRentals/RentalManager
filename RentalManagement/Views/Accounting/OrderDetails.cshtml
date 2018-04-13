@@ -1,13 +1,63 @@
-﻿
+﻿@model IEnumerable<RentalManagement.Models.Occupancy>
+
 @{
-    ViewBag.Title = "OrderDetails";
+    ViewBag.Warning = "Do you wish to confirm your purchase?";
+    ViewBag.Title = "Your Order Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
-<h3>@ViewBag.Message</h3>
+<!--
+What Data to grab:
+    Rental with price per month?
+    Applicant: Name,Email,Details,AssetID
+    Full Address: ID,MyProperty,StreetAddress,Province,Country,PostalCode
+    Tenant: Name,Email,Details
+    Asset: isOccuupied,Name,Address, Rent
+-->
+@foreach (var item in Model)
+{
+    @Html.Raw("Client Name: ") @Html.DisplayFor(modelItem => item.ClientID.Name)
+    <br />
+    @Html.Raw("Street Address: ")
+    <br />
+    @Html.Raw("Province: ")
+    <br />
+    @Html.Raw("Country: ")
+    <br />
+    @Html.Raw("Postal Code:")
+    <br />
+    @Html.Raw("Start Date:") @Html.DisplayFor(modelItem => item.StartDate)
+    <br />
+    @Html.Raw("End Date:") @Html.DisplayFor(modelItem => item.EndDate)
+    <br />
+    @Html.Raw("Total Amount: ")
+    <br />
+    @Html.Raw("Addional Details:") @Html.DisplayFor(model => item.Detail)
+    <br />
+    <br />
+    using (Html.BeginForm("OrderDetails"))
+    {
+        @Html.AntiForgeryToken()
 
-<p>Order Details here</p>
+        @Html.HiddenFor(modelItem => item.ID);
+        @Html.HiddenFor(modelItem => item.AssetID)
+        @Html.HiddenFor(modelItem => item.ClientID)
+        @Html.HiddenFor(modelItem => item.StartDate)
+        @Html.HiddenFor(modelItem => item.Detail)
 
+        <input type="submit" class="btn btn-default" value="Submit" />
+    }
+}
+
+<br />
+<br />
+<br />
+<!--- We will be using the rental model
+    ID - From Occupancy
+    AssetID - From Occupancy
+    ClientID - From Occupancy
+    NegotiatedOn - SYSTime()
+    Details - Occupancy
+    -->
 <!-- Final confirmation page-->
-<p><a class="btn btn-default" href="../Home/Index">Confirm &raquo;</a></p>

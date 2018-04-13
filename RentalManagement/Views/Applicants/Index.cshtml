@@ -1,0 +1,56 @@
+﻿@model IEnumerable<RentalManagement.Models.Applicant>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <h2>@ViewBag.Message</h2>   
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Details)
+        </th>
+        <th>
+            <p>Rental Property ID</p>
+        </th>
+        <th>
+            <p>Options</p>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssetID)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.ApplicantID }) |*@
+                @Html.ActionLink("Details", "Details", new { id = item.ApplicantID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ApplicantID }) |
+                @Html.ActionLink("Approve", "Approve", new { id = item.ApplicantID })
+            </td>
+        </tr>
+    }
+
+</table>

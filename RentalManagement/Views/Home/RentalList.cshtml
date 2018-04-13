@@ -1,0 +1,60 @@
+﻿@model IEnumerable<RentalManagement.Models.Asset>
+
+@{
+    ViewBag.Title = "RentalList";
+}
+
+<h2>RentalList</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AskingRent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.StreetAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.Province)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.PostalCode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AskingRent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.StreetAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.Province)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.PostalCode)
+        </td>
+        <td>
+            @Html.ActionLink("Apply","Create" ,"Applicants", new { id = item.ID },null)
+        </td>
+    </tr>
+}
+
+
+
+</table>

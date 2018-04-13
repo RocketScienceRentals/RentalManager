@@ -298,7 +298,11 @@ namespace RentalManagement.Controllers
                 OtherLogins = otherLogins
             });
         }
-
+        [HttpGet]
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
         //
         // POST: /Manage/LinkLogin
         [HttpPost]

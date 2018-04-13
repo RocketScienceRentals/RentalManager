@@ -413,7 +413,6 @@ namespace RentalManagement.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
-
         //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]

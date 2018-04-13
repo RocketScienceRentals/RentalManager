@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<RentalManagement.Models.Occupancy>
+
 @{
     ViewBag.Title = "Accounting";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,5 +7,29 @@
 
 <h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
+<!--
+What Data to grab:
+    Rental with price per month?
+    Applicant: Name,Email,Details,AssetID
+    Full Address: ID,MyProperty,StreetAddress,Province,Country,PostalCode
+    Tenant: Name,Email,Details
+    Asset: isOccuupied,Name,Address, Rent
+-->
+<p>Order Details here</p>
+@foreach (var item in Model)
+{
+    @Html.Raw("Client Name: ") @Html.DisplayFor(modelItem => item.ClientID.Name)
+    <br />
+    @Html.Raw("Start Date: ") @Html.DisplayFor(modelItem => item.StartDate)
+    <br />
+    @Html.Raw("End Date: ") @Html.DisplayFor(modelItem => item.EndDate)
+    <br />
+    @Html.Raw("Price: ")
+}
+
+
+<br />
+<br />
+<br />
 
 <p><a class="btn btn-default" href="Accounting/PaymentDetails">Book &raquo;</a></p>
