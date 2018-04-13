@@ -8,10 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using RentalManagement.Models;
 using RentalManagement.CustomFilters;
+using Microsoft.AspNet.Identity;
 
 namespace RentalManagement.Controllers
 {
-    [AuthLog(Roles = "Tenant")]
+    [AuthLog(Roles = "Admin, Manager, Staff, Tenant")]
     public class MaintenanceRequestsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -48,14 +49,48 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,CreatedDate,CompletedDate,Subject,RequestDetail,StatusDetail,FixDetail,HoursSpent")] MaintenanceRequest maintenanceRequest)
+        [AuthLog(Roles = "Admin, Manager, Staff, Tenant")]
+        public ActionResult Create([Bind(Include = "Asset,Subject,RequestDetail")] MaintenanceRequest maintenanceRequest)
         {
             if (ModelState.IsValid)
             {
-                maintenanceRequest.ID = Guid.NewGuid();
-                db.MaintenanceRequest.Add(maintenanceRequest);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                // Tenant request creation
+                if (User.IsInRole("Tenant"))
+                {
+                    maintenanceRequest.ID = Guid.NewGuid();
+                    maintenanceRequest.CreatedDate = System.DateTime.Now;
+                    maintenanceRequest.CompletedDate = null;
+
+                    // Bind Asset and Tenant data from Occupancy for the currently logged in tenant user    
+                    var currentUserId = User.Identity.GetUserId();
+                    var currentUser = db.Users.Include("Tenant").SingleOrDefault(s => s.Id == currentUserId);
+                    var tenant = currentUser.Tenant;
+
+                    maintenanceRequest.Tenant = tenant;
+                        
+                    var asset = db.Occupancies
+                                .Include("AssetID")
+                                .Include("ClientID")
+                                .Where(s => s.ClientID.ID == tenant.ID)
+                                .First().AssetID;
+                    maintenanceRequest.Asset = asset;
+                    db.MaintenanceRequest.Add(maintenanceRequest);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                // Admin, manager, staff request creation
+                if (User.IsInRole("Admin") ||
+                    User.IsInRole("Manager") ||
+                    User.IsInRole("Staff"))
+                {
+                    maintenanceRequest.ID = Guid.NewGuid();
+                    maintenanceRequest.CreatedDate = System.DateTime.Now;
+                    maintenanceRequest.CompletedDate = null;
+                    db.MaintenanceRequest.Add(maintenanceRequest);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(maintenanceRequest);
