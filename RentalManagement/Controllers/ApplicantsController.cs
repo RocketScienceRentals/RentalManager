@@ -4,8 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using RentalManagement.Models;
 
 namespace RentalManagement.Controllers
@@ -146,6 +149,49 @@ namespace RentalManagement.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void Approve(int? id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                Applicant applicant = db.Applicants.Find(id);
+
+                /*
+                 * UserName must be Email
+                 */
+                var user = new ApplicationUser { UserName = applicant.Email, Email = applicant.Email };
+                string password = "Password1!";
+
+                var store = new UserStore<ApplicationUser>(db);
+                var manager = new UserManager<ApplicationUser, string>(store);
+
+                var result = manager.Create(user, password);
+                if (!result.Succeeded)
+                    throw new ApplicationException("Unable to create a user.");
+
+                result = manager.AddToRole(user.Id, "Tenant");
+                if (!result.Succeeded)
+                    throw new ApplicationException("Unable to add user to a role.");
+
+                Asset asset = db.Assets.Find(applicant.AssetID);
+
+                Tenant tenant = new Tenant { ID = Guid.NewGuid(),
+                                             Name = applicant.Name,
+                                             Email = applicant.Email,
+                                             Details = applicant.Details,
+                                             RequestedAssets = asset
+                                           };
+                db.Tenants.Add(tenant);
+                db.SaveChanges();
+
+                //var client = new SmtpClient("smtp.gmail.com", 587)
+                //{
+                //    Credentials = new NetworkCredential("myusername@gmail.com", "mypwd"),
+                //    EnableSsl = true
+                //};
+                //client.Send("myusername@gmail.com", "myusername@gmail.com", "Your Tenant Account", "Your password is: " + password);
+            }
         }
     }
 }
