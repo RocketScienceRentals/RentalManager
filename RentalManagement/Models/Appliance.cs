@@ -16,10 +16,10 @@ namespace RentalManagement.Models
 
     public enum ApplianceType
     {
-        DishWasher,
-        Washer,
-        Dryer,
-        Microwave,
-        Stove
+        DishWasher
+        ,Washer
+        ,Dryer
+        ,Microwave
+        ,Stove
     }
 }
