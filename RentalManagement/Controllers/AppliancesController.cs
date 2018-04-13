@@ -10,7 +10,7 @@ using RentalManagement.Models;
 
 namespace RentalManagement.Controllers
 {
-    [Authorize(Roles = "Admin, Manager, Staff")]
+    [Authorize(Roles = "Manager")]
     public class AppliancesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -18,7 +18,7 @@ namespace RentalManagement.Controllers
         // GET: Appliances
         public ActionResult Index()
         {
-            return View(db.Appliances.ToList());
+            return View(db.Appliances.Include("BelongsToAsset").ToList());
         }
 
         // GET: Appliances/Details/5
@@ -28,7 +28,7 @@ namespace RentalManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Appliance appliance = db.Appliances.Find(id);
+            Appliance appliance = db.Appliances.Include("BelongsToAsset").Single(a => a.ID == id);
             if (appliance == null)
             {
                 return HttpNotFound();
@@ -98,7 +98,7 @@ namespace RentalManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Appliance appliance = db.Appliances.Find(id);
+            Appliance appliance = db.Appliances.Include("BelongsToAsset").Single(a => a.ID == id);
             if (appliance == null)
             {
                 return HttpNotFound();
