@@ -35,9 +35,31 @@ namespace RentalManagement.Controllers
             return View(applicant);
         }
 
-        // GET: Applicants/Create
-        public ActionResult Create()
+        public ActionResult Edit(Guid? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Asset asset = db.Assets.Find(id);
+            if (asset == null)
+            {
+                return HttpNotFound();
+            }
+            return View(asset);
+        }
+
+        // GET: Applicants/Create
+        public ActionResult Create(Guid? id)
+        {
+            //tempGuid = asset.ID;
+            ViewBag.Message = id;
+            TempData["Message"] = id;
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+
             return View();
         }
 
@@ -46,10 +68,12 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Email,Details")] Applicant applicant)
-        {
+        public ActionResult Create([Bind(Include = "ApplicantID,Name,Email,Details,Asset")] Applicant applicant, Guid AssetID)
+        {   
             if (ModelState.IsValid)
             {
+                applicant.AssetID = AssetID;
+                db.Assets.Find(AssetID);
                 db.Applicants.Add(applicant);
                 db.SaveChanges();
                 return RedirectToAction("Index");

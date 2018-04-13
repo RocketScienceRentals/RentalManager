@@ -50,9 +50,11 @@
             @Html.DisplayFor(modelItem => item.Address.PostalCode)
         </td>
         <td>
-            @Html.ActionLink("Apply", "ApplicationForm", new { id = item.ID })
+            @Html.ActionLink("Apply","Create" ,"Applicants", new { id = item.ID },null)
         </td>
     </tr>
 }
+
+
 
 </table>
