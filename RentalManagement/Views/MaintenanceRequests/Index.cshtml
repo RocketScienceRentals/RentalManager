@@ -3,7 +3,9 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<br />
+<button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Create", "MaintenanceRequests")'">Create New Request</button>
+<br />
 <h2>Active Requests</h2>
 <table class="table">
     <tr>
@@ -60,8 +62,14 @@
                     @Html.DisplayFor(modelItem => item.HoursSpent)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin") 
+                        || ViewContext.HttpContext.User.IsInRole("Manager") 
+                        || ViewContext.HttpContext.User.IsInRole("Staff"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) 
+                    }
+                    
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) 
                     @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                 </td>
             </tr>
@@ -134,3 +142,4 @@
     }
 
 </table>
+<script src="~/Scripts/requestScript.js" type="text/javascript"></script>
