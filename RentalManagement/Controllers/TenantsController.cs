@@ -6,12 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using RentalManagement.CustomFilters;
 using RentalManagement.Models;
 
 namespace RentalManagement.Controllers
 {
-    [AuthLog(Roles = "Tenant")]
     public class TenantsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -19,7 +17,7 @@ namespace RentalManagement.Controllers
         // GET: Tenants
         public ActionResult Index()
         {
-            return View(db.Applicants.ToList());
+            return View(db.Tenants.ToList());
         }
 
         // GET: Tenants/Details/5
