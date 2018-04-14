@@ -142,23 +142,6 @@ namespace RentalManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        /* // POST: Applicants/Accept/5
-            //[ValidateAntiForgeryToken]
-        public ActionResult Accept(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Applicant applicant = db.Applicants.Find(id);
-            if (applicant == null)
-            {
-                return HttpNotFound();
-            }
-            return View(applicant);
-        }
-        */
-
         /*    
         [ActionName("Accept")]
         //add record to tenant and delete from applicant
@@ -210,6 +193,7 @@ namespace RentalManagement.Controllers
             base.Dispose(disposing);
         }
 
+        //Get
         [ActionName("Approve")]
         public ActionResult Approve(int id)
         {
@@ -217,6 +201,7 @@ namespace RentalManagement.Controllers
             {
                 Applicant applicant = db.Applicants.Find(id);
                 Asset asset = db.Assets.Find(applicant.AssetID);
+
                 Tenant tenant = new Tenant
                 {
                     ID = Guid.NewGuid(),
@@ -260,54 +245,27 @@ namespace RentalManagement.Controllers
                     //    EnableSsl = true
                     //};
                     //client.Send("myusername@gmail.com", applicant.Email , "Your Tenant Account", "Your password is: " + password);
-                    
-                    // save data into rental
+
+                    // associate tenant data with rental table
                     Rental rental = new Rental();
-                    rental.ClientID.Name = tenant.Name;
-                    rental.ClientID.ID = tenant.ID;
-                    rental.ClientID.Email = tenant.Email;
-                    rental.ClientID.Details = tenant.Details;
-                    rental.ClientID.Asset = tenant.Asset;
+                    rental.AssetID = tenant.Asset;
+                    rental.ClientID = tenant;
+                    rental.NegotiatedOn = DateTime.Now;
+                    rental.Details = tenant.Details;
 
-                    rental.AssetID.Address = asset.Address;
-                    rental.AssetID.Appliances = asset.Appliances;
-                    rental.AssetID.AskingRent = asset.AskingRent;
-                    rental.AssetID.ID = asset.ID;
-                    rental.AssetID.IsOccuppied = asset.IsOccuppied;
-                    rental.AssetID.Name = asset.Name;
-                    rental.AssetID.OccupancyHistory = asset.OccupancyHistory;
-                    rental.AssetID.RentalHistory = asset.RentalHistory;
-                    rental.AssetID.Type = asset.Type;
-                    
+                    db.Rentals.Add(rental);
                     db.SaveChanges();
 
-                    // save data into occupancy
+                    // associate tenant data with occupancy table
                     Occupancy occupancy = new Occupancy();
+                    occupancy.AssetID = tenant.Asset;
+                    occupancy.ClientID = tenant;
+                    occupancy.Detail = tenant.Details;
+                    occupancy.StartDate = DateTime.Now;
+                    occupancy.EndDate = DateTime.Now;
 
-                    occupancy.ClientID.Name = tenant.Name;
-                    occupancy.ClientID.ID = tenant.ID;
-                    occupancy.ClientID.Email = tenant.Email;
-                    occupancy.ClientID.Details = tenant.Details;
-                    occupancy.ClientID.Asset = tenant.Asset;
-
-                    occupancy.AssetID.Address = asset.Address;
-                    occupancy.AssetID.Appliances = asset.Appliances;
-                    occupancy.AssetID.AskingRent = asset.AskingRent;
-                    occupancy.AssetID.ID = asset.ID;
-                    occupancy.AssetID.IsOccuppied = asset.IsOccuppied;
-                    occupancy.AssetID.Name = asset.Name;
-                    occupancy.AssetID.OccupancyHistory = asset.OccupancyHistory;
-                    occupancy.AssetID.RentalHistory = asset.RentalHistory;
-                    occupancy.AssetID.Type = asset.Type;
-
+                    db.Occupancies.Add(occupancy);
                     db.SaveChanges();
-
-                    // asset is occupied in asset table
-                    asset.IsOccuppied = true;
-                    db.SaveChanges();
-
-                    // if asset is occupied, delete relevant applicants
-
                 }
             }
             return RedirectToAction("Index", "Home");
