@@ -50,6 +50,9 @@
                 @Html.ActionLink("Delete", "Delete", new { id = item.ApplicantID }) |
                 @Html.ActionLink("Approve", "Approve", new { id = item.ApplicantID })
             </td>
+            <td>
+                @Html.ActionLink("Accept", "Accept", new { id = item.ApplicantID })
+            </td>
         </tr>
     }
 

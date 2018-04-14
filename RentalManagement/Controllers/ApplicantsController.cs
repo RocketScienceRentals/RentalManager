@@ -142,6 +142,65 @@ namespace RentalManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        /* // POST: Applicants/Accept/5
+            //[ValidateAntiForgeryToken]
+        public ActionResult Accept(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Applicant applicant = db.Applicants.Find(id);
+            if (applicant == null)
+            {
+                return HttpNotFound();
+            }
+            return View(applicant);
+        }
+        */
+
+        /*    
+        [ActionName("Accept")]
+        //add record to tenant and delete from applicant
+        public ActionResult AcceptApplicants(int id)
+        {
+            
+            Tenant tenant = new Tenant();
+            Applicant applicant = db.Applicants.Find(id);
+
+            //transfer id(int) to id(guid)
+            byte[] bytes = new byte[16];
+            BitConverter.GetBytes(id).CopyTo(bytes, 0);
+            Guid gid = new Guid(bytes);
+            //tenant.ID = Guid.NewGuid();
+            //string sid = Convert.ToString(id);
+            //Guid.Parse(sid);
+            //tenant.ID = Guid.ParseExact(sid, "B");
+
+            //save applicant data to tenant
+            tenant.Name = applicant.Name;
+            tenant.Email = applicant.Email;
+            tenant.Details = applicant.Details;
+            tenant.ID = gid;
+            //tenant.RequestedAssets = db.Assets.Find(applicant.AssetID);
+            
+            //add tenant to data base
+            db.Tenants.Add(tenant);
+            db.SaveChanges();
+
+            //delete record from applicants
+            db.Applicants.Remove(applicant);
+            db.SaveChanges();
+
+            //delete from assets?
+            //Asset asset = db.Assets.Find(applicant.AssetID);
+            //db.Assets.Remove(asset);
+            //db.SaveChanges();
+            
+            return RedirectToAction("Index");
+        }
+        */
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -158,14 +217,13 @@ namespace RentalManagement.Controllers
             {
                 Applicant applicant = db.Applicants.Find(id);
                 Asset asset = db.Assets.Find(applicant.AssetID);
-
                 Tenant tenant = new Tenant
                 {
                     ID = Guid.NewGuid(),
                     Name = applicant.Name,
                     Email = applicant.Email,
                     Details = applicant.Details,
-                    RequestedAssets = asset
+                    Asset = asset
                 };
                 db.Tenants.Add(tenant);
                 db.SaveChanges();
@@ -202,6 +260,54 @@ namespace RentalManagement.Controllers
                     //    EnableSsl = true
                     //};
                     //client.Send("myusername@gmail.com", applicant.Email , "Your Tenant Account", "Your password is: " + password);
+                    
+                    // save data into rental
+                    Rental rental = new Rental();
+                    rental.ClientID.Name = tenant.Name;
+                    rental.ClientID.ID = tenant.ID;
+                    rental.ClientID.Email = tenant.Email;
+                    rental.ClientID.Details = tenant.Details;
+                    rental.ClientID.Asset = tenant.Asset;
+
+                    rental.AssetID.Address = asset.Address;
+                    rental.AssetID.Appliances = asset.Appliances;
+                    rental.AssetID.AskingRent = asset.AskingRent;
+                    rental.AssetID.ID = asset.ID;
+                    rental.AssetID.IsOccuppied = asset.IsOccuppied;
+                    rental.AssetID.Name = asset.Name;
+                    rental.AssetID.OccupancyHistory = asset.OccupancyHistory;
+                    rental.AssetID.RentalHistory = asset.RentalHistory;
+                    rental.AssetID.Type = asset.Type;
+                    
+                    db.SaveChanges();
+
+                    // save data into occupancy
+                    Occupancy occupancy = new Occupancy();
+
+                    occupancy.ClientID.Name = tenant.Name;
+                    occupancy.ClientID.ID = tenant.ID;
+                    occupancy.ClientID.Email = tenant.Email;
+                    occupancy.ClientID.Details = tenant.Details;
+                    occupancy.ClientID.Asset = tenant.Asset;
+
+                    occupancy.AssetID.Address = asset.Address;
+                    occupancy.AssetID.Appliances = asset.Appliances;
+                    occupancy.AssetID.AskingRent = asset.AskingRent;
+                    occupancy.AssetID.ID = asset.ID;
+                    occupancy.AssetID.IsOccuppied = asset.IsOccuppied;
+                    occupancy.AssetID.Name = asset.Name;
+                    occupancy.AssetID.OccupancyHistory = asset.OccupancyHistory;
+                    occupancy.AssetID.RentalHistory = asset.RentalHistory;
+                    occupancy.AssetID.Type = asset.Type;
+
+                    db.SaveChanges();
+
+                    // asset is occupied in asset table
+                    asset.IsOccuppied = true;
+                    db.SaveChanges();
+
+                    // if asset is occupied, delete relevant applicants
+
                 }
             }
             return RedirectToAction("Index", "Home");
