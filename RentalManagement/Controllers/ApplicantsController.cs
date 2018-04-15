@@ -142,6 +142,48 @@ namespace RentalManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        /*    
+        [ActionName("Accept")]
+        //add record to tenant and delete from applicant
+        public ActionResult AcceptApplicants(int id)
+        {
+            
+            Tenant tenant = new Tenant();
+            Applicant applicant = db.Applicants.Find(id);
+
+            //transfer id(int) to id(guid)
+            byte[] bytes = new byte[16];
+            BitConverter.GetBytes(id).CopyTo(bytes, 0);
+            Guid gid = new Guid(bytes);
+            //tenant.ID = Guid.NewGuid();
+            //string sid = Convert.ToString(id);
+            //Guid.Parse(sid);
+            //tenant.ID = Guid.ParseExact(sid, "B");
+
+            //save applicant data to tenant
+            tenant.Name = applicant.Name;
+            tenant.Email = applicant.Email;
+            tenant.Details = applicant.Details;
+            tenant.ID = gid;
+            //tenant.RequestedAssets = db.Assets.Find(applicant.AssetID);
+            
+            //add tenant to data base
+            db.Tenants.Add(tenant);
+            db.SaveChanges();
+
+            //delete record from applicants
+            db.Applicants.Remove(applicant);
+            db.SaveChanges();
+
+            //delete from assets?
+            //Asset asset = db.Assets.Find(applicant.AssetID);
+            //db.Assets.Remove(asset);
+            //db.SaveChanges();
+            
+            return RedirectToAction("Index");
+        }
+        */
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -151,6 +193,7 @@ namespace RentalManagement.Controllers
             base.Dispose(disposing);
         }
 
+        //Get
         [ActionName("Approve")]
         public ActionResult Approve(int id)
         {
@@ -165,7 +208,7 @@ namespace RentalManagement.Controllers
                     Name = applicant.Name,
                     Email = applicant.Email,
                     Details = applicant.Details,
-                    RequestedAssets = asset
+                    Asset = asset
                 };
                 db.Tenants.Add(tenant);
                 db.SaveChanges();
@@ -202,6 +245,27 @@ namespace RentalManagement.Controllers
                     //    EnableSsl = true
                     //};
                     //client.Send("myusername@gmail.com", applicant.Email , "Your Tenant Account", "Your password is: " + password);
+
+                    // associate tenant data with rental table
+                    Rental rental = new Rental();
+                    rental.AssetID = tenant.Asset;
+                    rental.ClientID = tenant;
+                    rental.NegotiatedOn = DateTime.Now;
+                    rental.Details = tenant.Details;
+
+                    db.Rentals.Add(rental);
+                    db.SaveChanges();
+
+                    // associate tenant data with occupancy table
+                    Occupancy occupancy = new Occupancy();
+                    occupancy.AssetID = tenant.Asset;
+                    occupancy.ClientID = tenant;
+                    occupancy.Detail = tenant.Details;
+                    occupancy.StartDate = DateTime.Now;
+                    occupancy.EndDate = DateTime.Now;
+
+                    db.Occupancies.Add(occupancy);
+                    db.SaveChanges();
                 }
             }
             return RedirectToAction("Index", "Home");
