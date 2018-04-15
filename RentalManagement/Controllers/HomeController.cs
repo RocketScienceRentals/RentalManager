@@ -33,7 +33,6 @@ namespace RentalManagement.Controllers
 
         public ActionResult RentalList()
         {
-
             ApplicationDbContext db = new ApplicationDbContext();
             var asset = db.Assets.Include("Address");
             return View(asset.ToList());
@@ -53,6 +52,5 @@ namespace RentalManagement.Controllers
         {
             return View();
         }
-
     }
 }

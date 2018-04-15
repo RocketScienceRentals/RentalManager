@@ -152,7 +152,7 @@ namespace RentalManagement.Controllers
         }
 
         [ActionName("Approve")]
-        public ActionResult Approve(int id)
+        public ActionResult Approve(int? id)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -168,8 +168,6 @@ namespace RentalManagement.Controllers
                     RequestedAssets = asset
                 };
                 db.Tenants.Add(tenant);
-                db.SaveChanges();
-
                 db.Applicants.Remove(applicant);
                 db.SaveChanges();
 
