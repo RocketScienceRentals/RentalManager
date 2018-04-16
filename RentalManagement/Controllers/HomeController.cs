@@ -34,7 +34,7 @@ namespace RentalManagement.Controllers
         public ActionResult RentalList()
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            var asset = db.Assets.Include("Address");
+            var asset = db.Assets.Include("Address").Where(s=> s.IsOccuppied == false);
             return View(asset.ToList());
         }
 

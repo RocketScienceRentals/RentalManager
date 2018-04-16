@@ -20,6 +20,7 @@ namespace RentalManagement.Controllers
         // GET: Assets
         public ActionResult Index()
         {
+
             return View(db.Assets.ToList());
         }
 
@@ -91,7 +92,7 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Type,AskingRent,Address")] Asset asset)
+        public ActionResult Create([Bind(Include = "ID,Name,Type,AskingRent,Address,RentalHistory")] Asset asset)
         {
             List<Appliance> appliances = new List<Appliance>();
 
@@ -113,6 +114,12 @@ namespace RentalManagement.Controllers
                 asset.Appliances = appliances;
                 db.Assets.Add(asset);
                 db.SaveChanges();
+
+                //Adding occupancy
+
+
+                //Adding Rental information
+
                 return RedirectToAction("Index");
             }
 
@@ -271,7 +278,7 @@ namespace RentalManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Asset asset = db.Assets.Include("Appliances").Single(a => a.ID == id);
+            Asset asset = db.Assets.Include("Address").Include("Appliances").Include("RentalHistory").Single(a => a.ID == id);
 
             foreach (Appliance app in asset.Appliances)
             {

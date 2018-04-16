@@ -41,18 +41,6 @@ namespace RentalManagement.Controllers
         // GET: MaintenanceRequests/Create
         public ActionResult Create()
         {
-            var assets = db.Assets.ToList();
-            List<SelectListItem> list = assets.ConvertAll(a =>
-                                        {
-                                            return new SelectListItem()
-                                            {
-                                                Text = a.Name,
-                                                Value = a.ID.ToString(),
-                                                Selected = false
-                                            };
-                                        });
-            ViewBag.AssetList = new SelectList(list, "Value", "Text");
-            //ViewData["Assets"] = assets;
             return View();
         }
 
@@ -76,11 +64,11 @@ namespace RentalManagement.Controllers
                     // Bind Asset and Tenant data from Occupancy for the currently logged in tenant user    
                     var currentUserId = User.Identity.GetUserId();
                     var currentUser = db.Users.Include("Tenant").SingleOrDefault(s => s.Id == currentUserId);
-                    Tenant tenant = currentUser.Tenant;
+                    var tenant = currentUser.Tenant;
 
                     maintenanceRequest.Tenant = tenant;
                         
-                    Asset asset = db.Occupancies
+                    var asset = db.Occupancies
                                 .Include("AssetID")
                                 .Include("ClientID")
                                 .Where(s => s.ClientID.ID == tenant.ID)
@@ -99,20 +87,6 @@ namespace RentalManagement.Controllers
                     maintenanceRequest.ID = Guid.NewGuid();
                     maintenanceRequest.CreatedDate = System.DateTime.Now;
                     maintenanceRequest.CompletedDate = null;
-
-                    Asset selectedAsset = db.Assets.Find(Guid.Parse(Request["selectAsset"]));
-                    maintenanceRequest.Asset = selectedAsset;
-                    
-                    // Look in Occupancies to check if a Tenant exists for the selected Asset
-                    if (selectedAsset != null)
-                    {
-                        maintenanceRequest.Tenant = db.Occupancies
-                                .Include("AssetID")
-                                .Include("ClientID")
-                                .Where(s => s.AssetID.ID == selectedAsset.ID)
-                                .FirstOrDefault()?.ClientID;
-                    }
-
                     db.MaintenanceRequest.Add(maintenanceRequest);
                     db.SaveChanges();
                     return RedirectToAction("Index");
