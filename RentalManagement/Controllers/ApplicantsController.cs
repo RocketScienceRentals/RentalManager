@@ -13,6 +13,7 @@ using RentalManagement.Models;
 
 namespace RentalManagement.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class ApplicantsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -20,7 +21,7 @@ namespace RentalManagement.Controllers
         // GET: Applicants
         public ActionResult Index()
         {
-            return View(db.Applicants.ToList());
+            return View(db.Applicants.OrderBy(s=>s.Name).GroupBy(g=>g.Email).ToList());
         }
 
         // GET: Applicants/Details/5
@@ -72,7 +73,17 @@ namespace RentalManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ApplicantID,Name,Email,Details,Asset")] Applicant applicant, Guid AssetID)
-        {   
+        {
+        //            [Key]
+        //public int ID { get; set; }
+
+        //[Key]
+        //public Asset AssetID { get; set; }
+
+        //[Key]
+        //public Tenant ClientID { get; set; }
+        //public DateTime NegotiatedOn { get; set; }
+
             if (ModelState.IsValid)
             {
                 applicant.AssetID = AssetID;
@@ -142,48 +153,6 @@ namespace RentalManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        /*    
-        [ActionName("Accept")]
-        //add record to tenant and delete from applicant
-        public ActionResult AcceptApplicants(int id)
-        {
-            
-            Tenant tenant = new Tenant();
-            Applicant applicant = db.Applicants.Find(id);
-
-            //transfer id(int) to id(guid)
-            byte[] bytes = new byte[16];
-            BitConverter.GetBytes(id).CopyTo(bytes, 0);
-            Guid gid = new Guid(bytes);
-            //tenant.ID = Guid.NewGuid();
-            //string sid = Convert.ToString(id);
-            //Guid.Parse(sid);
-            //tenant.ID = Guid.ParseExact(sid, "B");
-
-            //save applicant data to tenant
-            tenant.Name = applicant.Name;
-            tenant.Email = applicant.Email;
-            tenant.Details = applicant.Details;
-            tenant.ID = gid;
-            //tenant.RequestedAssets = db.Assets.Find(applicant.AssetID);
-            
-            //add tenant to data base
-            db.Tenants.Add(tenant);
-            db.SaveChanges();
-
-            //delete record from applicants
-            db.Applicants.Remove(applicant);
-            db.SaveChanges();
-
-            //delete from assets?
-            //Asset asset = db.Assets.Find(applicant.AssetID);
-            //db.Assets.Remove(asset);
-            //db.SaveChanges();
-            
-            return RedirectToAction("Index");
-        }
-        */
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -193,31 +162,46 @@ namespace RentalManagement.Controllers
             base.Dispose(disposing);
         }
 
-        //Get
         [ActionName("Approve")]
-        public ActionResult Approve(int id)
+        public ActionResult Approve(int? id)
         {
             using (var db = new ApplicationDbContext())
             {
                 Applicant applicant = db.Applicants.Find(id);
                 Asset asset = db.Assets.Find(applicant.AssetID);
-
+                db.Entry(asset).State = EntityState.Modified;
                 Tenant tenant = new Tenant
                 {
                     ID = Guid.NewGuid(),
                     Name = applicant.Name,
                     Email = applicant.Email,
                     Details = applicant.Details,
-                    Asset = asset
+                    RequestedAssets = asset
                 };
                 db.Tenants.Add(tenant);
-                db.SaveChanges();
-
                 db.Applicants.Remove(applicant);
-                db.SaveChanges();
 
-                //asset.IsOccuppied = true;
-                //db.SaveChanges();
+                var changedAsset = db.Assets.Include("Address").SingleOrDefault(s => s.ID == applicant.AssetID);
+                changedAsset.IsOccuppied = true;
+
+
+                //                public int ID { get; set; }
+
+                //public Asset AssetID { get; set; }
+
+                //public Tenant ClientID { get; set; }
+                //public DateTime NegotiatedOn { get; set; }
+                //public string Details { get; set; }
+                Rental rentals = new Rental
+                {
+                    AssetID = asset,
+                    ClientID = tenant,
+                    NegotiatedOn = DateTime.Now
+                };
+                //bool rentalExists = db.Rentals.Any(rental => rental.AssetID == asset);
+
+                db.Rentals.Add(rentals);
+                db.SaveChanges();
 
                 Tenant tenant2 = db.Tenants.Find(tenant.ID);
                 if (tenant2 != null)
@@ -245,28 +229,10 @@ namespace RentalManagement.Controllers
                     //    EnableSsl = true
                     //};
                     //client.Send("myusername@gmail.com", applicant.Email , "Your Tenant Account", "Your password is: " + password);
-
-                    // associate tenant data with rental table
-                    Rental rental = new Rental();
-                    rental.AssetID = tenant.Asset;
-                    rental.ClientID = tenant;
-                    rental.NegotiatedOn = DateTime.Now;
-                    rental.Details = tenant.Details;
-
-                    db.Rentals.Add(rental);
-                    db.SaveChanges();
-
-                    // associate tenant data with occupancy table
-                    Occupancy occupancy = new Occupancy();
-                    occupancy.AssetID = tenant.Asset;
-                    occupancy.ClientID = tenant;
-                    occupancy.Detail = tenant.Details;
-                    occupancy.StartDate = DateTime.Now;
-                    occupancy.EndDate = DateTime.Now;
-
-                    db.Occupancies.Add(occupancy);
-                    db.SaveChanges();
                 }
+
+
+
             }
             return RedirectToAction("Index", "Home");
         }
