@@ -208,7 +208,7 @@ namespace RentalManagement.Controllers
                     Name = applicant.Name,
                     Email = applicant.Email,
                     Details = applicant.Details,
-                    Asset = asset
+                    RequestedAssets = asset
                 };
                 db.Tenants.Add(tenant);
                 db.SaveChanges();
@@ -248,7 +248,7 @@ namespace RentalManagement.Controllers
 
                     // associate tenant data with rental table
                     Rental rental = new Rental();
-                    rental.AssetID = tenant.Asset;
+                    rental.AssetID = tenant.RequestedAssets;
                     rental.ClientID = tenant;
                     rental.NegotiatedOn = DateTime.Now;
                     rental.Details = tenant.Details;
@@ -258,7 +258,7 @@ namespace RentalManagement.Controllers
 
                     // associate tenant data with occupancy table
                     Occupancy occupancy = new Occupancy();
-                    occupancy.AssetID = tenant.Asset;
+                    occupancy.AssetID = tenant.RequestedAssets;
                     occupancy.ClientID = tenant;
                     occupancy.Detail = tenant.Details;
                     occupancy.StartDate = DateTime.Now;

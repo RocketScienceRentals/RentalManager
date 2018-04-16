@@ -27,11 +27,10 @@ namespace RentalManagement.Controllers
             // Gets the tenent entity for the current logged in user
             var tenant = currentUser.Tenant;
 
-            //rental.ClientID = currentUser.Tenant;
-            // stores the assetID to the rental.asset
-            //rental.AssetID = ctx.Occupancies.Include("AssetID.ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList().First().AssetID;
-            var test = db.Occupancies.Include("ClientID").Include("AssetID").Include(e => e.AssetID.Address).Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
-            return View(test);
+            //  query data that would include data from two or more of the above entities and is filtered by a Where clause.
+            var getInfo = db.Occupancies.Include("ClientID").Include("AssetID").Include(e => e.AssetID.Address).Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
+        
+            return View(getInfo);
         }
         // GET: Accounting//PaymentDetails
         public ActionResult PaymentDetails()
@@ -51,12 +50,10 @@ namespace RentalManagement.Controllers
             // Gets the tenent entity for the current logged in user
             var tenant = currentUser.Tenant;
 
-            //rental.ClientID = currentUser.Tenant;
-            // stores the assetID to the rental.asset
-            //rental.AssetID = ctx.Occupancies.Include("AssetID.ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList().First().AssetID;
-            var test = db.Occupancies.Include("ClientID").Include("AssetID").Include(e => e.AssetID.Address).Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
+            //query data that would include data from two or more of the above entities and is filtered by a Where clause.
+            var getInfo = db.Occupancies.Include("ClientID").Include("AssetID").Include(e => e.AssetID.Address).Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
 
-            return View(test);
+            return View(getInfo);
         }
         // Post
         [HttpPost]
@@ -84,5 +81,6 @@ namespace RentalManagement.Controllers
             }
             return View(rental);
         }
+
     }
 }

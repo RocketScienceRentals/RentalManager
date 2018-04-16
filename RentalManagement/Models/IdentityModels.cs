@@ -42,5 +42,15 @@ namespace RentalManagement.Models
         public DbSet<Appliance> Appliances { get; set; }
         public DbSet<MaintenanceRequest> MaintenanceRequest { get; set; }
         public DbSet<Applicant> Applicants { get; set; }
+        public DbSet<TenantDetails> TenantDetails { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //Fluent API for a 1..0:1 relationship in Tenant
+            modelBuilder.Entity<Tenant>()
+                         .HasRequired(e => e.TenantDetails)
+                         .WithRequiredPrincipal(s => s.Tenant);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

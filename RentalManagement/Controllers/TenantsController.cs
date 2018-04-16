@@ -48,12 +48,16 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Email,Details")] Tenant tenant)
+        public ActionResult Create([Bind(Include = "ID,Name,Email,Details")] Tenant tenant,TenantDetails tenantDetails)
         {
             if (ModelState.IsValid)
             {
                 tenant.ID = Guid.NewGuid();
                 db.Tenants.Add(tenant);
+                db.SaveChanges();
+
+                tenantDetails.Tenant = tenant;
+                db.TenantDetails.Add(tenantDetails);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
