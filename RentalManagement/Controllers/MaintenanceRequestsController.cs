@@ -20,7 +20,21 @@ namespace RentalManagement.Controllers
         // GET: MaintenanceRequests
         public ActionResult Index()
         {
-            return View(db.MaintenanceRequest.ToList());
+            var assetGroupQuery = db.MaintenanceRequest.Include("Asset").GroupBy(a => a.Asset);
+            Dictionary<string, string> numRequestPerAsset = new Dictionary<string, string>();
+            foreach (var line in assetGroupQuery
+                        .Include("Asset")
+                        .Select(group => new {
+                            group.Key.Name,
+                            Count = group.Count().ToString()
+                        })
+                        .OrderByDescending(x => x.Name))
+            {
+                numRequestPerAsset.Add(line.Name, line.Count);
+                Console.WriteLine("Asset name: {0}, requests: {1}", line.Name, line.Count);
+            }
+            ViewBag.NumRequestPerAsset = numRequestPerAsset;
+            return View(db.MaintenanceRequest.OrderByDescending(a => a.CreatedDate).ToList());
         }
 
         // GET: MaintenanceRequests/Details/5
@@ -41,6 +55,47 @@ namespace RentalManagement.Controllers
         // GET: MaintenanceRequests/Create
         public ActionResult Create()
         {
+            var assets = db.Assets.ToList();
+            List<SelectListItem> list = assets.ConvertAll(a =>
+                                        {
+                                            return new SelectListItem()
+                                            {
+                                                Text = a.Name,
+                                                Value = a.ID.ToString(),
+                                                Selected = false
+                                            };
+                                        });
+            ViewBag.AssetList = new SelectList(list, "Value", "Text");
+            ViewBag.ApplianceList = null;
+
+            if (User.IsInRole("Tenant"))
+            {
+                // Find the asset for the tenant   
+                var currentUserId = User.Identity.GetUserId();
+                var currentUser = db.Users.Include("Tenant").SingleOrDefault(s => s.Id == currentUserId);
+                Tenant tenant = currentUser.Tenant;
+
+                Asset asset = db.Occupancies
+                            .Include("AssetID")
+                            .Include("ClientID")
+                            .Where(s => s.ClientID.ID == tenant.ID)
+                            .First().AssetID;
+                
+                // Get list of appliances for the asset
+                var appliancesInAsset = db.Assets.Include("Appliances").Where(a => a.ID == asset.ID).FirstOrDefault().Appliances;
+                // 
+                List<SelectListItem> aList = new List<SelectListItem>();
+                foreach (Appliance a in appliancesInAsset)
+                {
+                    aList.Add(new SelectListItem()
+                    {
+                        Text = a.Name,
+                        Value = a.ID.ToString(),
+                        Selected = false
+                    });
+                }
+                ViewBag.ApplianceList = new MultiSelectList(aList, "Value", "Text");
+            }
             return View();
         }
 
@@ -64,11 +119,11 @@ namespace RentalManagement.Controllers
                     // Bind Asset and Tenant data from Occupancy for the currently logged in tenant user    
                     var currentUserId = User.Identity.GetUserId();
                     var currentUser = db.Users.Include("Tenant").SingleOrDefault(s => s.Id == currentUserId);
-                    var tenant = currentUser.Tenant;
+                    Tenant tenant = currentUser.Tenant;
 
                     maintenanceRequest.Tenant = tenant;
                         
-                    var asset = db.Occupancies
+                    Asset asset = db.Occupancies
                                 .Include("AssetID")
                                 .Include("ClientID")
                                 .Where(s => s.ClientID.ID == tenant.ID)
@@ -87,6 +142,20 @@ namespace RentalManagement.Controllers
                     maintenanceRequest.ID = Guid.NewGuid();
                     maintenanceRequest.CreatedDate = System.DateTime.Now;
                     maintenanceRequest.CompletedDate = null;
+
+                    Asset selectedAsset = db.Assets.Find(Guid.Parse(Request["selectAsset"]));
+                    maintenanceRequest.Asset = selectedAsset;
+                    
+                    // Look in Occupancies to check if a Tenant exists for the selected Asset
+                    if (selectedAsset != null)
+                    {
+                        maintenanceRequest.Tenant = db.Occupancies
+                                .Include("AssetID")
+                                .Include("ClientID")
+                                .Where(s => s.AssetID.ID == selectedAsset.ID)
+                                .FirstOrDefault()?.ClientID;
+                    }
+
                     db.MaintenanceRequest.Add(maintenanceRequest);
                     db.SaveChanges();
                     return RedirectToAction("Index");

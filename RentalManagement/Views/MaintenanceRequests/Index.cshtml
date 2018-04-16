@@ -3,8 +3,39 @@
 @{
     ViewBag.Title = "Index";
 }
+
 <br />
 <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Create", "MaintenanceRequests")'">Create New Request</button>
+
+@if (ViewContext.HttpContext.User.IsInRole("Admin")
+    || ViewContext.HttpContext.User.IsInRole("Manager")
+    || ViewContext.HttpContext.User.IsInRole("Staff"))
+{
+<br />
+<h2> Requests per Asset</h2>
+<table class="table">
+    <tr>
+        <th>
+            Asset Name
+        </th>
+        <th>
+            Number of requests
+        </th>
+    </tr>
+    @foreach (var asset in (Dictionary<string, string>)ViewBag.NumRequestPerAsset)
+    {
+        <tr>
+            <td>
+                @Html.Raw(asset.Key)
+            </td>
+            <td>
+                @Html.Raw(asset.Value)
+            </td>
+        </tr>
+    }
+</table>
+}
+
 <br />
 <h2>Active Requests</h2>
 <table class="table">
@@ -62,15 +93,16 @@
                     @Html.DisplayFor(modelItem => item.HoursSpent)
                 </td>
                 <td>
-                    @if (ViewContext.HttpContext.User.IsInRole("Admin") 
-                        || ViewContext.HttpContext.User.IsInRole("Manager") 
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin")
+                        || ViewContext.HttpContext.User.IsInRole("Manager")
                         || ViewContext.HttpContext.User.IsInRole("Staff"))
                     {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) 
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                     }
-                    
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) 
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+
+                    @Html.ActionLink("Details", "Details", new { id = item.ID })
+
                 </td>
             </tr>
         }
