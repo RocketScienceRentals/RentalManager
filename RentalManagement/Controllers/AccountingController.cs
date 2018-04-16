@@ -30,7 +30,7 @@ namespace RentalManagement.Controllers
             //rental.ClientID = currentUser.Tenant;
             // stores the assetID to the rental.asset
             //rental.AssetID = ctx.Occupancies.Include("AssetID.ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList().First().AssetID;
-            var test = db.Occupancies.Include("ClientID").Include("AssetID").Include(e => e.AssetID.Address).Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
+            var test = db.Occupancies.Include("ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
             return View(test);
         }
         // GET: Accounting//PaymentDetails
@@ -54,28 +54,28 @@ namespace RentalManagement.Controllers
             //rental.ClientID = currentUser.Tenant;
             // stores the assetID to the rental.asset
             //rental.AssetID = ctx.Occupancies.Include("AssetID.ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList().First().AssetID;
-            var test = db.Occupancies.Include("ClientID").Include("AssetID").Include(e => e.AssetID.Address).Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
+            var test = db.Occupancies.Include("ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
 
             return View(test);
         }
         // Post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult OrderDetails([Bind(Include = "AssetID,ClientID,NegoationedOn,Details")] Rental rental)
+        public ActionResult OrderDetails([Bind(Include = "ID,AssetID,ClientID,NegoationedOn,Details")] Rental rental)
         {
             if (ModelState.IsValid)
             {
                 if (User.IsInRole("Tenant"))
                 {
-                    var currentUserId = User.Identity.GetUserId();  
+                    var currentUserId = User.Identity.GetUserId();
                     // NEVER FORGET TO INCLUDE() TO LOAD UNDERLYING ENTITY DATA
-                    var currentUser = db.Users.Include("Tenant").Include(e => e.Tenant.RequestedAssets).SingleOrDefault(s => s.Id == currentUserId);
-                    var getAsset = currentUser.Tenant.RequestedAssets;
+                    var currentUser = db.Users.Include("Tenant").SingleOrDefault(s => s.Id == currentUserId);
 
-                    rental.AssetID = getAsset;
+                    rental.ID = 1;
                     rental.ClientID = currentUser.Tenant;
+                    rental.AssetID = null;
                     rental.NegotiatedOn = DateTime.Now;
-                    rental.Details = currentUser.Tenant.Details;
+                    rental.Details = "Test 123";
 
                     db.Rentals.Add(rental);
                     db.SaveChanges();
