@@ -13,7 +13,6 @@ using RentalManagement.Models;
 
 namespace RentalManagement.Controllers
 {
-    [Authorize(Roles = "Manager")]
     public class ApplicantsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -21,7 +20,7 @@ namespace RentalManagement.Controllers
         // GET: Applicants
         public ActionResult Index()
         {
-            return View(db.Applicants.OrderBy(s=>s.Name).GroupBy(g=>g.Email).ToList());
+            return View(db.Applicants.ToList());
         }
 
         // GET: Applicants/Details/5

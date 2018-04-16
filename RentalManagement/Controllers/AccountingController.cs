@@ -27,11 +27,10 @@ namespace RentalManagement.Controllers
             // Gets the tenent entity for the current logged in user
             var tenant = currentUser.Tenant;
 
-            //rental.ClientID = currentUser.Tenant;
-            // stores the assetID to the rental.asset
-            //rental.AssetID = ctx.Occupancies.Include("AssetID.ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList().First().AssetID;
-            var test = db.Occupancies.Include("ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
-            return View(test);
+            //  query data that would include data from two or more of the above entities and is filtered by a Where clause.
+            var getInfo = db.Occupancies.Include("ClientID").Include("AssetID").Include(e => e.AssetID.Address).Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
+        
+            return View(getInfo);
         }
         // GET: Accounting//PaymentDetails
         public ActionResult PaymentDetails()
@@ -51,31 +50,29 @@ namespace RentalManagement.Controllers
             // Gets the tenent entity for the current logged in user
             var tenant = currentUser.Tenant;
 
-            //rental.ClientID = currentUser.Tenant;
-            // stores the assetID to the rental.asset
-            //rental.AssetID = ctx.Occupancies.Include("AssetID.ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList().First().AssetID;
-            var test = db.Occupancies.Include("ClientID").Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
+            //query data that would include data from two or more of the above entities and is filtered by a Where clause.
+            var getInfo = db.Occupancies.Include("ClientID").Include("AssetID").Include(e => e.AssetID.Address).Where(s => s.ClientID.ID == currentUser.Tenant.ID).ToList();
 
-            return View(test);
+            return View(getInfo);
         }
         // Post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult OrderDetails([Bind(Include = "ID,AssetID,ClientID,NegoationedOn,Details")] Rental rental)
+        public ActionResult OrderDetails([Bind(Include = "AssetID,ClientID,NegoationedOn,Details")] Rental rental)
         {
             if (ModelState.IsValid)
             {
                 if (User.IsInRole("Tenant"))
                 {
-                    var currentUserId = User.Identity.GetUserId();
+                    var currentUserId = User.Identity.GetUserId();  
                     // NEVER FORGET TO INCLUDE() TO LOAD UNDERLYING ENTITY DATA
-                    var currentUser = db.Users.Include("Tenant").SingleOrDefault(s => s.Id == currentUserId);
+                    var currentUser = db.Users.Include("Tenant").Include(e => e.Tenant.RequestedAssets).SingleOrDefault(s => s.Id == currentUserId);
+                    var getAsset = currentUser.Tenant.RequestedAssets;
 
-                    rental.ID = 1;
+                    rental.AssetID = getAsset;
                     rental.ClientID = currentUser.Tenant;
-                    rental.AssetID = null;
                     rental.NegotiatedOn = DateTime.Now;
-                    rental.Details = "Test 123";
+                    rental.Details = currentUser.Tenant.Details;
 
                     db.Rentals.Add(rental);
                     db.SaveChanges();
@@ -84,5 +81,6 @@ namespace RentalManagement.Controllers
             }
             return View(rental);
         }
+
     }
 }

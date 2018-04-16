@@ -48,17 +48,20 @@ namespace RentalManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Email,Details")] Tenant tenant)
+        public ActionResult Create([Bind(Include = "ID,Name,Email,Details")] Tenant tenant,TenantDetails tenantDetails)
         {
-
             if (ModelState.IsValid)
             {
                 tenant.ID = Guid.NewGuid();
                 db.Tenants.Add(tenant);
                 db.SaveChanges();
 
+                tenantDetails.Tenant = tenant;
+                db.TenantDetails.Add(tenantDetails);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(tenant);
         }
 
@@ -113,14 +116,14 @@ namespace RentalManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Tenant tenant = db.Tenants.Include("RequestedAssets").SingleOrDefault(s => s.ID == id);
+            Tenant tenant = db.Tenants.Find(id);
+
             var store = new UserStore<ApplicationUser>(db);
             var manager = new UserManager<ApplicationUser, string>(store);
             var user = manager.Users.SingleOrDefault(u => u.Email == tenant.Email);
+            manager.RemoveFromRole(user.Id, "Tenant");
+            var result = manager.Delete(user);
 
-            var asset = db.Assets.Include("RentalHistory").SingleOrDefault(s => s.ID == tenant.RequestedAssets.ID);
-            db.Entry(asset).State = EntityState.Modified;
-            asset.IsOccuppied = false;
             db.Tenants.Remove(tenant);
             db.SaveChanges();
             return RedirectToAction("Index");
