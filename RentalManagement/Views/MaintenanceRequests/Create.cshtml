@@ -42,10 +42,21 @@
             @Html.LabelFor(model => model.RequestDetail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@Html.EditorFor(model => model.RequestDetail, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.TextAreaFor(model => model.RequestDetail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.RequestDetail, new { htmlAttributes = new { @class = "form-control" }, cols = 40, rows = 10 })
                 @Html.ValidationMessageFor(model => model.RequestDetail, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @if (ViewContext.HttpContext.User.IsInRole("Tenant"))
+        {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Appliances, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("selectAppliances", (MultiSelectList)ViewBag.ApplianceList, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+            <br />
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

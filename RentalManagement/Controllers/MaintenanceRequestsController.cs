@@ -20,7 +20,21 @@ namespace RentalManagement.Controllers
         // GET: MaintenanceRequests
         public ActionResult Index()
         {
-            return View(db.MaintenanceRequest.ToList());
+            var assetGroupQuery = db.MaintenanceRequest.Include("Asset").GroupBy(a => a.Asset);
+            Dictionary<string, string> numRequestPerAsset = new Dictionary<string, string>();
+            foreach (var line in assetGroupQuery
+                        .Include("Asset")
+                        .Select(group => new {
+                            group.Key.Name,
+                            Count = group.Count().ToString()
+                        })
+                        .OrderByDescending(x => x.Name))
+            {
+                numRequestPerAsset.Add(line.Name, line.Count);
+                Console.WriteLine("Asset name: {0}, requests: {1}", line.Name, line.Count);
+            }
+            ViewBag.NumRequestPerAsset = numRequestPerAsset;
+            return View(db.MaintenanceRequest.OrderByDescending(a => a.CreatedDate).ToList());
         }
 
         // GET: MaintenanceRequests/Details/5
@@ -52,7 +66,36 @@ namespace RentalManagement.Controllers
                                             };
                                         });
             ViewBag.AssetList = new SelectList(list, "Value", "Text");
-            //ViewData["Assets"] = assets;
+            ViewBag.ApplianceList = null;
+
+            if (User.IsInRole("Tenant"))
+            {
+                // Find the asset for the tenant   
+                var currentUserId = User.Identity.GetUserId();
+                var currentUser = db.Users.Include("Tenant").SingleOrDefault(s => s.Id == currentUserId);
+                Tenant tenant = currentUser.Tenant;
+
+                Asset asset = db.Occupancies
+                            .Include("AssetID")
+                            .Include("ClientID")
+                            .Where(s => s.ClientID.ID == tenant.ID)
+                            .First().AssetID;
+                
+                // Get list of appliances for the asset
+                var appliancesInAsset = db.Assets.Include("Appliances").Where(a => a.ID == asset.ID).FirstOrDefault().Appliances;
+                // 
+                List<SelectListItem> aList = new List<SelectListItem>();
+                foreach (Appliance a in appliancesInAsset)
+                {
+                    aList.Add(new SelectListItem()
+                    {
+                        Text = a.Name,
+                        Value = a.ID.ToString(),
+                        Selected = false
+                    });
+                }
+                ViewBag.ApplianceList = new MultiSelectList(aList, "Value", "Text");
+            }
             return View();
         }
 
